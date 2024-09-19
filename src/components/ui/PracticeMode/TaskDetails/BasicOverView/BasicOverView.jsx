@@ -1,5 +1,6 @@
-import { Grid, Heading, Text, Flex, Badge, Card, Box } from '@radix-ui/themes';
+import { Grid, Text, Flex, Badge, Card, Box } from '@radix-ui/themes';
 import shareInfoCoin from '../../../../../assets/Images/ShareInfocoin.svg';
+import classes from './BasicOverView.module.css';
 
 export const BasicOverView = () => {
     return (
@@ -44,39 +45,7 @@ export const BasicOverView = () => {
                         </Flex>
                     </Box>
                 </Card>
-                <Card>
-                    <Flex p={'4'} justify={'between'} height={'100%'} direction={'column'}>
-                        <Flex justify={'between'} gap={'2'}>
-                            <Flex direction={'column'} gap={'2'}>
-                                <Text color='gray' size={'2'}>
-                                    Submissions
-                                </Text>
-                                <Heading color='blue' size={'8'}>
-                                    45
-                                </Heading>
-                            </Flex>
-                            <Flex direction={'column'} gap={'2'}>
-                                <Text color='gray' size={'2'}>
-                                    Approved
-                                </Text>
-                                <Heading color='green' size={'8'}>
-                                    25
-                                </Heading>
-                            </Flex>
-                            <Flex direction={'column'} gap={'2'}>
-                                <Text color='gray' size={'2'}>
-                                    Pending
-                                </Text>
-                                <Heading color='orange' size={'8'}>
-                                    20
-                                </Heading>
-                            </Flex>
-                        </Flex>
-                        {/* <Box>
-                            <Progress variant='classic' value={75} size='3' />
-                        </Box> */}
-                    </Flex>
-                </Card>
+
                 <Card>
                     <Flex p={'4'} justify={'between'} gap={'2'}>
                         <Flex direction={'column'} gap={'2'}>
@@ -103,6 +72,17 @@ export const BasicOverView = () => {
                                 12 Jan 24
                             </Text>
                         </Flex>
+                    </Flex>
+                </Card>
+                <Card style={{ padding: '0px' }}>
+                    <Flex
+                        className={classes.imagecontainer}
+                        height={'100%'}
+                        align={'center'}
+                        justify={'center'}>
+                        <Text size={'2'} color='gray'>
+                            Hover to see Banner Image
+                        </Text>
                     </Flex>
                 </Card>
             </Grid>
@@ -160,11 +140,6 @@ export const BasicOverView = () => {
                     </Flex>
                 </Card>
             </Grid>
-
-            {/* <Grid columns={{ initial: '1', md: '2' }} gap='3' width='auto'>
-                <TextField.Root size={'3'} radius='large' placeholder='Title' />
-                <TextField.Root size={'3'} radius='large' placeholder='Title' />
-            </Grid> */}
         </div>
     );
 };
