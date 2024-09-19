@@ -23,7 +23,6 @@ export const TaskTable = () => {
                             Date Posted
                         </Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell justify={'center'}>
-                            {' '}
                             Last Updated
                         </Table.ColumnHeaderCell>
                         <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
@@ -69,6 +68,7 @@ export const TaskTable = () => {
         </Box>
     );
 };
+
 const tableData = [
     {
         title: 'Mastering UI/UX Design Fundamentals ',

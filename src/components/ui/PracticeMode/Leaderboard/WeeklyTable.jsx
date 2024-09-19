@@ -56,13 +56,17 @@ export const WeeklyTable = () => {
                                     <Text color='white'>01 Jan 2022</Text>
                                 </Table.Cell>
 
-                                <Table.Cell>
-                                    <Flex justify={'center'} align={'center'} gap={'3'}>
-                                        <img src={shareInfoCoin} width={'30px'} height={'30px'} />
-                                        <Text weight={'bold'} size={'3'}>
+                                <Table.Cell justify={'center'}>
+                                    <Badge color='yellow' size={'3'} radius='full' prefix=''>
+                                        <Flex justify={'center'} align={'center'} gap={'2'}>
+                                            <img
+                                                src={shareInfoCoin}
+                                                width={'25px'}
+                                                height={'25px'}
+                                            />
                                             {item.score}
-                                        </Text>
-                                    </Flex>
+                                        </Flex>
+                                    </Badge>
                                 </Table.Cell>
                             </Table.Row>
                         </>

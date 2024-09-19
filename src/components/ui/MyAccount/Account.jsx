@@ -1,6 +1,7 @@
 import { Button, Flex, Heading, Text, TextField, Card, Box, Separator } from '@radix-ui/themes';
 import { IconLayoutDashboardFilled } from '@tabler/icons-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Reusable Form Section Component
 const FormSection = ({ title, value, onChange, showUpdate, placeholder, type = 'text' }) => (
@@ -35,6 +36,7 @@ const FormSection = ({ title, value, onChange, showUpdate, placeholder, type = '
 );
 
 export const Account = () => {
+    const navigate = useNavigate();
     // Initial values for comparison
     const initialName = 'Akshay Ashokan Pothan';
     const initialEmail = 'akshayashokanpothan@imiot.com';
@@ -82,11 +84,7 @@ export const Account = () => {
             <Flex my={'9'} align={'center'} direction={'column'} justify={'center'}>
                 <Flex width={'70%'} align={'center'} justify={'between'}>
                     <Heading size={'7'}>Akshay Ashokan Pothan</Heading>
-                    <Button
-                        onClick={() => window.history.back()}
-                        size={'3'}
-                        variant='soft'
-                        color='gray'>
+                    <Button onClick={() => navigate(-1)} size={'3'} variant='soft' color='gray'>
                         <IconLayoutDashboardFilled style={{ zIndex: '-1' }} size={17} />
                         Back to Dashboard
                     </Button>

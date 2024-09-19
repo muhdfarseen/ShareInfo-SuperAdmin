@@ -1,6 +1,6 @@
 import { Box, Text, Flex, TextField, Select, Button } from '@radix-ui/themes';
 import { IconPlus, IconSearch } from '@tabler/icons-react';
-import { TaskTable } from './TaskTable';
+import { GridCard } from './GridCard';
 
 export const ManageTasks = () => {
     return (
@@ -54,7 +54,9 @@ export const ManageTasks = () => {
                 </Flex>
             </Flex>
 
-            <TaskTable />
+            <GridCard />
+            {/* to do delete tasktable file */}
+            {/* <TaskTable /> */}
         </Box>
     );
 };

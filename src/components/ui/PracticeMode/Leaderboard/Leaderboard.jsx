@@ -11,6 +11,7 @@ export const Leaderboard = () => {
             <Box style={{ padding: '30px 40px 30px 40px', width: '100%' }} width={'100%'}>
                 <Box mb={'6'} maxWidth='600px'>
                     <RadioCards.Root
+                        variant='classic'
                         onValueChange={(value) => setValue(value)}
                         defaultValue='1'
                         columns={{ initial: '1', sm: '3' }}>

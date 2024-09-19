@@ -6,6 +6,7 @@ import { Challenges } from '../components/Pages/NavlinkPages/Challenges/Challeng
 import { PracticeMode } from '../components/Pages/NavlinkPages/Challenges/PracticeMode/PracticeMode';
 import { JobHuntMode } from '../components/Pages/NavlinkPages/Challenges/JobHuntMode/JobHuntMode';
 import { MyAccount } from '../components/Pages/MyAccount';
+import { TaskPage } from '../components/Pages/NavlinkPages/Challenges/PracticeMode/TaskPage';
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
             {
                 path: 'practicemode',
                 element: <PracticeMode />
+            },
+            {
+                path: 'managetask',
+                element: <TaskPage />
             },
             {
                 path: 'jobhunmode',

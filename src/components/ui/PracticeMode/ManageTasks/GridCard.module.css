@@ -1,0 +1,9 @@
+.cardhover {
+    background-color: var(--gray-1);
+    transition: background-color 0.3s ease;
+}
+
+.cardhover:hover {
+    cursor: pointer;
+    background-color: var(--gray-2) !important;
+}
