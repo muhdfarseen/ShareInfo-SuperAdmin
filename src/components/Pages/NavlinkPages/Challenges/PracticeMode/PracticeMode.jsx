@@ -1,4 +1,4 @@
-import { Heading, Flex, Link, Tabs } from '@radix-ui/themes';
+import { Heading, Flex, Link, Tabs, Separator } from '@radix-ui/themes';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -24,7 +24,8 @@ export const PracticeMode = () => {
                 }}>
                 <Flex width={'100%'} mb={'4'} gap={'4'} align={'center'}>
                     <Link
-                        href='#'
+                        color='gray'
+                        style={{ cursor: 'pointer' }}
                         onClick={() => {
                             handleNavigation('challenges');
                         }}
@@ -33,13 +34,13 @@ export const PracticeMode = () => {
                         Challenges
                     </Link>
 
-                    <IconChevronRight color='#9eb1ff' size={'15'} />
-                    <Link href='#' size={'1'} weight={'medium'}>
+                    <IconChevronRight color='gray' size={'15'} />
+                    <Link style={{ cursor: 'pointer' }} size={'1'} weight={'medium'}>
                         Practice Mode
                     </Link>
                 </Flex>
 
-                <Flex width={'100%'} direction={'column'}>
+                <Flex direction={'column'}>
                     <Heading>Practice Mode</Heading>
                     <Tabs.Root
                         onValueChange={(value) => setSelectedTab(value)}
@@ -52,6 +53,7 @@ export const PracticeMode = () => {
                     </Tabs.Root>
                 </Flex>
             </Flex>
+            <Separator size={'4'} />
 
             {selectedTab === 'managePractice' && <ManageTasks />}
             {selectedTab === 'leaderboard' && <Leaderboard />}

@@ -1,10 +1,18 @@
-import { Text, Card, Flex, Badge } from '@radix-ui/themes';
+import { Text, Card, Flex, Badge, Heading, Button } from '@radix-ui/themes';
 import { IconLink, IconRoute2 } from '@tabler/icons-react';
+import { IconPencil } from '@tabler/icons-react';
 
 export const TaskRoadMap = () => {
     return (
         <div>
-            <Flex direction={'column'} gap={'4'} my={'6'}>
+            <Flex align={'center'} justify={'between'} mt={'6'}>
+                <Heading>Roadmap</Heading>
+                <Button variant='surface' color='gray'>
+                    <IconPencil size={16} />
+                    Edit
+                </Button>
+            </Flex>
+            <Flex direction={'column'} gap={'4'} my={'4'}>
                 {stepdata.map((item) => (
                     <Card key={item.step}>
                         <Flex p={'4'} direction={'column'} gap={'4'}>

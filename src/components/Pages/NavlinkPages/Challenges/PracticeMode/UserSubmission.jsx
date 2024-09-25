@@ -1,22 +1,18 @@
-import { Heading, Flex, Link, Tabs, Separator } from '@radix-ui/themes';
+import { Heading, Flex, Link, Separator } from '@radix-ui/themes';
 import { IconChevronRight } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { TaskWiseTable } from '../../../../ui/PracticeMode/ManageSingleTask/Leaderboard/TaskWiseTable';
-import { TaskDetails } from '../../../../ui/PracticeMode/ManageSingleTask/TaskDetails/TaskDetails';
-import { Submissions } from '../../../../ui/PracticeMode/ManageSingleTask/Submissions/Submissions';
 
-export const TaskPage = () => {
+export const UserSubmission = () => {
     const navigate = useNavigate();
-    const [selectedTab, setSelectedTab] = useState('taskdetails');
 
     const handleNavigation = (path) => {
         navigate(`/dashboard/${path}`);
     };
 
     return (
-        <Flex width={'100%'} direction={'column'}>
+        <Flex height={'182px'} width={'100%'} direction={'column'}>
             <Flex
+                height={'100%'}
                 direction={'column'}
                 style={{
                     padding: '40px 40px 0 40px',
@@ -47,30 +43,28 @@ export const TaskPage = () => {
                         Practice Mode
                     </Link>
                     <IconChevronRight color='gray' size={'15'} />
-                    <Link style={{ cursor: 'pointer' }} size={'1'} weight={'medium'}>
+                    <Link
+                        color='gray'
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                            handleNavigation('managetask');
+                        }}
+                        size={'1'}
+                        weight={'medium'}>
                         Manage Task
+                    </Link>
+
+                    <IconChevronRight color='gray' size={'15'} />
+                    <Link style={{ cursor: 'pointer' }} size={'1'} weight={'medium'}>
+                        Submission
                     </Link>
                 </Flex>
 
                 <Flex width={'100%'} direction={'column'}>
                     <Heading>Mastering UI/UX Design Fundamentals</Heading>
-                    <Tabs.Root
-                        onValueChange={(value) => setSelectedTab(value)}
-                        mt={'7'}
-                        defaultValue='taskdetails'>
-                        <Tabs.List size={'2'}>
-                            <Tabs.Trigger value='taskdetails'>Task Details</Tabs.Trigger>
-                            <Tabs.Trigger value='submissions'>Submissions</Tabs.Trigger>
-                            <Tabs.Trigger value='leaderboard'>Leaderboard</Tabs.Trigger>
-                        </Tabs.List>
-                    </Tabs.Root>
                 </Flex>
             </Flex>
             <Separator size={'4'} />
-
-            {selectedTab === 'taskdetails' && <TaskDetails />}
-            {selectedTab === 'submissions' && <Submissions />}
-            {selectedTab === 'leaderboard' && <TaskWiseTable />}
         </Flex>
     );
 };

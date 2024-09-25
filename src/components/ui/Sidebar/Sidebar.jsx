@@ -2,11 +2,12 @@ import { useEffect, useState, useCallback } from 'react';
 import { Flex, IconButton } from '@radix-ui/themes';
 import { sidebarData } from './SidebarData';
 import classes from './Sidebar.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const Sidebar = () => {
     const [activeIcon, setActiveIcon] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleIconClick = useCallback(
         (name, link) => {
@@ -17,8 +18,16 @@ export const Sidebar = () => {
     );
 
     useEffect(() => {
-        handleIconClick(sidebarData[0].name, sidebarData[0].link);
-    }, [handleIconClick]);
+        const currentPath = location.pathname.replace('/dashboard/', '');
+        const activeItem = sidebarData.find((item) =>
+            Array.isArray(item.link) ? item.link.includes(currentPath) : item.link === currentPath
+        );
+        if (activeItem) {
+            setActiveIcon(activeItem.name);
+        } else {
+            setActiveIcon(null);
+        }
+    }, [location.pathname]);
 
     return (
         <div>
@@ -33,7 +42,7 @@ export const Sidebar = () => {
                         m={'2'}
                         variant={'ghost'}
                         color='gray'
-                        onClick={() => handleIconClick(item.name, item.link)}>
+                        onClick={() => handleIconClick(item.name, item.link[0])}>
                         {item.icon}
                     </IconButton>
                 ))}

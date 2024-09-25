@@ -1,10 +1,17 @@
-import { Text, Card, Flex, Badge } from '@radix-ui/themes';
-import { IconTimeline } from '@tabler/icons-react';
+import { Text, Card, Flex, Badge, Heading, Button } from '@radix-ui/themes';
+import { IconTimeline, IconPencil } from '@tabler/icons-react';
 
 export const StepWiseDetails = () => {
     return (
         <div>
-            <Flex direction={'column'} gap={'4'} my={'6'}>
+            <Flex align={'center'} justify={'between'} mt={'6'}>
+                <Heading>Steps</Heading>
+                <Button variant='surface' color='gray'>
+                    <IconPencil size={16} />
+                    Edit
+                </Button>
+            </Flex>
+            <Flex direction={'column'} gap={'4'} my={'4'}>
                 {stepdata.map((item) => (
                     <Card key={item.step}>
                         <Flex p={'4'} direction={'column'} gap={'4'}>

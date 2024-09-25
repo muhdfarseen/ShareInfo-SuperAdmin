@@ -1,11 +1,19 @@
-import { Grid, Text, Flex, Badge, Card, Box } from '@radix-ui/themes';
-import shareInfoCoin from '../../../../../assets/Images/ShareInfocoin.svg';
+import { Grid, Text, Flex, Badge, Card, Box, Heading, Button } from '@radix-ui/themes';
+import shareInfoCoin from '../../../../../../assets/Images/ShareInfocoin.svg';
 import classes from './BasicOverView.module.css';
+import { IconPencil } from '@tabler/icons-react';
 
 export const BasicOverView = () => {
     return (
         <div>
-            <Grid mt={'6'} columns={{ initial: '1', md: '3' }} gap='3' width='auto'>
+            <Flex align={'center'} justify={'between'} mt={'6'}>
+                <Heading>About</Heading>
+                <Button variant='surface' color='gray'>
+                    <IconPencil size={16} />
+                    Edit
+                </Button>
+            </Flex>
+            <Grid mt={'4'} columns={{ initial: '1', md: '3' }} gap='3' width='auto'>
                 <Card>
                     <Box p={'4'}>
                         <Flex gap={'8'} justify={'between'}>

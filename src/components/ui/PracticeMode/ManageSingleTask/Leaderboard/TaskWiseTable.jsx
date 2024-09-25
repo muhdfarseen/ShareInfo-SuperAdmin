@@ -1,5 +1,5 @@
 import { Table, Flex, Text, Badge, Avatar, Box } from '@radix-ui/themes';
-import shareInfoCoin from '../../../../assets/Images/ShareInfocoin.svg';
+import shareInfoCoin from '../../../../../assets/Images/ShareInfocoin.svg';
 
 export const TaskWiseTable = () => {
     return (

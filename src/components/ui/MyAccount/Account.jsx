@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, Text, TextField, Card, Box, Separator } from '@radix-ui/themes';
 import { IconLayoutDashboardFilled } from '@tabler/icons-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Reusable Form Section Component
 const FormSection = ({ title, value, onChange, showUpdate, placeholder, type = 'text' }) => (
@@ -37,6 +37,17 @@ const FormSection = ({ title, value, onChange, showUpdate, placeholder, type = '
 
 export const Account = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const goToPreviousPath = (e) => {
+        e.preventDefault();
+        // Check if there's a previous page to go back to
+        if (location.key !== 'default') {
+            navigate(-1); // Go back to the previous page if exists
+        } else {
+            navigate('/dashboard'); // Fallback to dashboard
+        }
+    };
     // Initial values for comparison
     const initialName = 'Akshay Ashokan Pothan';
     const initialEmail = 'akshayashokanpothan@imiot.com';
@@ -84,7 +95,12 @@ export const Account = () => {
             <Flex my={'9'} align={'center'} direction={'column'} justify={'center'}>
                 <Flex width={'70%'} align={'center'} justify={'between'}>
                     <Heading size={'7'}>Akshay Ashokan Pothan</Heading>
-                    <Button onClick={() => navigate(-1)} size={'3'} variant='soft' color='gray'>
+                    <Button
+                        type='button'
+                        onClick={goToPreviousPath}
+                        size={'3'}
+                        variant='soft'
+                        color='gray'>
                         <IconLayoutDashboardFilled style={{ zIndex: '-1' }} size={17} />
                         Back to Dashboard
                     </Button>
