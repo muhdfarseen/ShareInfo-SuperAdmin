@@ -1,4 +1,4 @@
-import { Box, Text, Flex, TextField, Select, Button } from '@radix-ui/themes';
+import { Box, Text, Flex, TextField, Select, Button, Dialog } from '@radix-ui/themes';
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { GridCard } from './GridCard';
 
@@ -45,18 +45,25 @@ export const ManageTasks = () => {
 
                 {/* right section buttons */}
                 <Flex gap={'4'} align={'center'}>
-                    <Button size={'2'} color='indigo'>
-                        <Flex align={'center'} justify={'center'} gap={'2'}>
-                            <IconPlus size={'17'} />
-                            <Text>New Practice Task</Text>
-                        </Flex>
-                    </Button>
+                    <Dialog.Root>
+                        <Dialog.Trigger>
+                            <Button size={'2'} color='indigo'>
+                                <Flex align={'center'} justify={'center'} gap={'2'}>
+                                    <IconPlus size={'17'} />
+                                    <Text>New Practice Task</Text>
+                                </Flex>
+                            </Button>
+                        </Dialog.Trigger>
+                        <Dialog.Content size='4'>
+                            <Text as='p' trim='both' size='4'>
+                                New Practice Task Form
+                            </Text>
+                        </Dialog.Content>
+                    </Dialog.Root>
                 </Flex>
             </Flex>
 
             <GridCard />
-            {/* to do delete tasktable file */}
-            {/* <TaskTable /> */}
         </Box>
     );
 };

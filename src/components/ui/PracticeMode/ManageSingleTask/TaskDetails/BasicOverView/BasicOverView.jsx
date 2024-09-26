@@ -1,4 +1,4 @@
-import { Grid, Text, Flex, Badge, Card, Box, Heading, Button } from '@radix-ui/themes';
+import { Grid, Text, Flex, Badge, Card, Box, Heading, Button, Dialog } from '@radix-ui/themes';
 import shareInfoCoin from '../../../../../../assets/Images/ShareInfocoin.svg';
 import classes from './BasicOverView.module.css';
 import { IconPencil } from '@tabler/icons-react';
@@ -8,10 +8,20 @@ export const BasicOverView = () => {
         <div>
             <Flex align={'center'} justify={'between'} mt={'6'}>
                 <Heading>About</Heading>
-                <Button variant='surface' color='gray'>
-                    <IconPencil size={16} />
-                    Edit
-                </Button>
+
+                <Dialog.Root>
+                    <Dialog.Trigger>
+                        <Button variant='surface' color='gray'>
+                            <IconPencil size={16} />
+                            Edit
+                        </Button>
+                    </Dialog.Trigger>
+                    <Dialog.Content size='4'>
+                        <Text as='p' trim='both' size='4'>
+                            Edit About Form
+                        </Text>
+                    </Dialog.Content>
+                </Dialog.Root>
             </Flex>
             <Grid mt={'4'} columns={{ initial: '1', md: '3' }} gap='3' width='auto'>
                 <Card>
