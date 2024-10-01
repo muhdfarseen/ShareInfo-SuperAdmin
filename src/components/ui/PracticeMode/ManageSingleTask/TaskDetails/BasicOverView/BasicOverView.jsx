@@ -2,11 +2,12 @@ import { Grid, Text, Flex, Badge, Card, Box, Heading, Button, Dialog } from '@ra
 import shareInfoCoin from '../../../../../../assets/Images/ShareInfocoin.svg';
 import classes from './BasicOverView.module.css';
 import { IconPencil } from '@tabler/icons-react';
+import { EditAboutForm } from './EditAboutForm';
 
 export const BasicOverView = () => {
     return (
         <div>
-            <Flex align={'center'} justify={'between'} mt={'6'}>
+            <Flex width={'100%'} align={'center'} justify={'between'} mt={'6'}>
                 <Heading>About</Heading>
 
                 <Dialog.Root>
@@ -16,10 +17,8 @@ export const BasicOverView = () => {
                             Edit
                         </Button>
                     </Dialog.Trigger>
-                    <Dialog.Content size='4'>
-                        <Text as='p' trim='both' size='4'>
-                            Edit About Form
-                        </Text>
+                    <Dialog.Content maxWidth={'60vw'} size='4'>
+                        <EditAboutForm />
                     </Dialog.Content>
                 </Dialog.Root>
             </Flex>

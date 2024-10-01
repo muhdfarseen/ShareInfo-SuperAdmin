@@ -17,13 +17,13 @@ export const Leaderboard = () => {
                         columns={{ initial: '1', sm: '3' }}>
                         <RadioCards.Item value='1'>
                             <Flex direction='column' width='100%'>
-                                <Text weight='bold'>Current Month</Text>
+                                <Text weight='bold'>Monthly Ranking</Text>
                                 <Text>September</Text>
                             </Flex>
                         </RadioCards.Item>
                         <RadioCards.Item value='2'>
                             <Flex direction='column' width='100%'>
-                                <Text weight='bold'>Current Week</Text>
+                                <Text weight='bold'>Weekly Ranking</Text>
                                 <Text>16-22 Sep</Text>
                             </Flex>
                         </RadioCards.Item>
