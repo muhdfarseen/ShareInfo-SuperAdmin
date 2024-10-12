@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'addnewpracticetask',
-                element: <AddNewPracticeTask/>
+                element: <AddNewPracticeTask />
             }
         ]
     },

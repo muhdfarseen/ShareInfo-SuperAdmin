@@ -105,7 +105,6 @@ export const AddNewPracticeTask = () => {
                     {selectedTab === '2' && <Steps />}
                     {selectedTab === '3' && <Roadmap />}
                     {selectedTab === '4' && <Preview />}
-
                 </Box>
             </Flex>
         </Flex>

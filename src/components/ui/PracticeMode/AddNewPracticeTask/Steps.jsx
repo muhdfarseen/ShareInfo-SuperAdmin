@@ -91,7 +91,6 @@ export const Steps = () => {
 
                 {/* Modal for adding/editing a step */}
                 <Dialog.Root open={open} onOpenChange={setOpen}>
-                  
                     <Dialog.Content>
                         <StepDetailsDialog step={currentStep} onSave={handleSaveStep} />
                     </Dialog.Content>

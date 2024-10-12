@@ -62,7 +62,7 @@ export const Roadmap = () => {
                             <Flex p='4' direction='column' gap='4'>
                                 <Flex justify={'between'}>
                                     <Badge
-                                    color='yellow'
+                                        color='yellow'
                                         style={{ width: 'fit-content' }}
                                         variant='surface'
                                         radius='full'>
