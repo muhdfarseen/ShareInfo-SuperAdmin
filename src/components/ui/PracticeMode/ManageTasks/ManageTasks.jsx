@@ -1,8 +1,11 @@
-import { Box, Text, Flex, TextField, Select, Button, Dialog } from '@radix-ui/themes';
+import { Box, Text, Flex, TextField, Select, Button } from '@radix-ui/themes';
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { GridCard } from './GridCard';
+import { useNavigate } from 'react-router-dom';
 
 export const ManageTasks = () => {
+    const navigate = useNavigate();
+
     return (
         <Box style={{ padding: '40px 40px 0 40px', width: '100%' }} width={'100%'}>
             <Flex justify={'between'} align={'center'}>
@@ -45,21 +48,14 @@ export const ManageTasks = () => {
 
                 {/* right section buttons */}
                 <Flex gap={'4'} align={'center'}>
-                    <Dialog.Root>
-                        <Dialog.Trigger>
-                            <Button size={'2'} color='indigo'>
-                                <Flex align={'center'} justify={'center'} gap={'2'}>
-                                    <IconPlus size={'17'} />
-                                    <Text>New Practice Task</Text>
-                                </Flex>
-                            </Button>
-                        </Dialog.Trigger>
-                        <Dialog.Content size='4'>
-                            <Text as='p' trim='both' size='4'>
-                                New Practice Task Form
+                    <Button size={'2'} color='indigo'>
+                        <Flex align={'center'} justify={'center'} gap={'2'}>
+                            <IconPlus size={'17'} />
+                            <Text onClick={() => navigate('/dashboard/addnewpracticetask')}>
+                                New Practice Task
                             </Text>
-                        </Dialog.Content>
-                    </Dialog.Root>
+                        </Flex>
+                    </Button>
                 </Flex>
             </Flex>
 

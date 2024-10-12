@@ -8,6 +8,7 @@ import { JobHuntMode } from '../components/Pages/NavlinkPages/Challenges/JobHunt
 import { MyAccount } from '../components/Pages/MyAccount';
 import { TaskPage } from '../components/Pages/NavlinkPages/Challenges/PracticeMode/TaskPage';
 import { UserSubmission } from '../components/Pages/NavlinkPages/Challenges/PracticeMode/UserSubmission';
+import { AddNewPracticeTask } from '../components/Pages/NavlinkPages/Challenges/PracticeMode/AddNewPracticeTask';
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
             {
                 path: 'submission',
                 element: <UserSubmission />
+            },
+            {
+                path: 'addnewpracticetask',
+                element: <AddNewPracticeTask/>
             }
         ]
     },

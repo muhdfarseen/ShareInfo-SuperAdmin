@@ -27,7 +27,7 @@ export const sidebarData = [
     {
         name: 'challenges',
         icon: <IconStack2Filled size={20} stroke={1.3} />,
-        link: ['challenges', 'practicemode', 'managetask', 'jobhunmode', 'submission']
+        link: ['challenges', 'practicemode', 'managetask', 'jobhunmode', 'submission', 'addnewpracticetask']
     },
     {
         name: 'navlinkfive',
