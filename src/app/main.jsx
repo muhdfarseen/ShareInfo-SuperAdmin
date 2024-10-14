@@ -1,10 +1,10 @@
 import { useState, useEffect, createContext } from 'react';
-import ReactDOM from 'react-dom/client';
-import { App } from './App.jsx';
-import './index.css';
 import { Theme } from '@radix-ui/themes';
-import '@radix-ui/themes/styles.css';
 import { Toaster } from 'react-hot-toast';
+import { App } from './App.jsx';
+import ReactDOM from 'react-dom/client';
+import '@radix-ui/themes/styles.css';
+import './index.css';
 
 export const ThemeContext = createContext();
 
