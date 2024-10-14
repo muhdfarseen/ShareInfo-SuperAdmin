@@ -8,7 +8,7 @@ import { ENDPOINTS } from '../../config/api-end-points';
 import ShareinfoNavLogo from '../../assets/Images/ShareinfoNavLogo.svg';
 import ShareinfoNavLogoDark from '../../assets/Images/ShareinfoNavLogo forDark.svg';
 import axios from 'axios';
-import { toast } from 'sonner'
+import { toast } from 'sonner';
 
 export const Login = () => {
     const navigate = useNavigate();
@@ -29,7 +29,6 @@ export const Login = () => {
 
     return (
         <div>
-            
             <Flex height={'100vh'} direction={'column'} align={'center'} justify={'center'}>
                 <Flex
                     minWidth={'300px'}
