@@ -4,6 +4,7 @@ import { App } from './App.jsx';
 import './index.css';
 import { Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
+import { Toaster } from 'react-hot-toast';
 
 export const ThemeContext = createContext();
 
@@ -32,6 +33,7 @@ const Main = () => {
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <Theme appearance={theme}>
+                <Toaster position='top-center' reverseOrder={false} />
                 <App />
             </Theme>
         </ThemeContext.Provider>
