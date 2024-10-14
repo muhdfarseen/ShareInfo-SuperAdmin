@@ -59,7 +59,7 @@ export const Login = () => {
                             <form onSubmit={handleLogin}>
                                 <Flex p={'4'} direction={'column'} gap={'4'}>
                                     <TextField.Root
-                                        {...register('email')}
+                                        {...register('email',{ required: true })}
                                         size={'3'}
                                         required
                                         type='email'
@@ -71,7 +71,7 @@ export const Login = () => {
                                     </TextField.Root>
 
                                     <TextField.Root
-                                        {...register('password')}
+                                        {...register('password',{ required: true })}
                                         required
                                         size={'3'}
                                         type='password'
