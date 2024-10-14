@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from 'react';
 import { Theme } from '@radix-ui/themes';
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 import { App } from './App.jsx';
 import ReactDOM from 'react-dom/client';
 import '@radix-ui/themes/styles.css';
@@ -30,10 +30,12 @@ const Main = () => {
         setTheme(newTheme);
     };
 
+    console.log(theme);
+
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <Theme appearance={theme}>
-                <Toaster position='top-center' reverseOrder={false} />
+                <Toaster theme={theme == 'dark' ? 'dark' : 'light'} />
                 <App />
             </Theme>
         </ThemeContext.Provider>
