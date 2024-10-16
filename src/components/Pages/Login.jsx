@@ -19,7 +19,7 @@ export const Login = () => {
         try {
             const response = await axios.post(ENDPOINTS.login, data, {
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 }
             });
             console.log(response);
@@ -30,7 +30,6 @@ export const Login = () => {
             console.log(error);
         }
     });
-    
 
     return (
         <div>
