@@ -17,7 +17,11 @@ export const Login = () => {
 
     const handleLogin = handleSubmit(async (data) => {
         try {
-            const response = await axios.post(ENDPOINTS.login, data);
+            const response = await axios.post(ENDPOINTS.login, data, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
             console.log(response);
             toast.success('Successfully toasted!');
             navigate('/dashboard');
@@ -26,6 +30,7 @@ export const Login = () => {
             console.log(error);
         }
     });
+    
 
     return (
         <div>
