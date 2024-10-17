@@ -3,28 +3,31 @@ import { IconMail, IconKey } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { ENDPOINTS } from '../../config/api-end-points';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLoginUserMutation } from '../../redux/api-services/login';
+import { loginUser } from '../../redux/reducers/auth/authSlice';
 import ShareinfoNavLogo from '../../assets/Images/ShareinfoNavLogo.svg';
 import ShareinfoNavLogoDark from '../../assets/Images/ShareinfoNavLogo forDark.svg';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
 
 export const Login = () => {
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme);
-
     const { register, handleSubmit } = useForm();
+    const [loginApiCall, { isLoading }] = useLoginUserMutation();
 
     const handleLogin = handleSubmit(async (data) => {
+        let loadingToastId;
         try {
-            const response = await axios.post(ENDPOINTS.login, data);
-            console.log(response);
+            loadingToastId = toast.loading('Logging in...');
+            const response = await loginApiCall(data).unwrap();
+            toast.dismiss(loadingToastId); 
             toast.success('Welcome Back!');
+            dispatch(loginUser(response));
             navigate('/dashboard');
         } catch (error) {
-            toast.error(error.message);
-            console.log(error);
+            toast.dismiss(loadingToastId); 
+            toast.error('Login failed, ' + (error.data?.message || 'try again'));
         }
     });
 
@@ -82,7 +85,7 @@ export const Login = () => {
                                             <IconKey height='16' width='16' />
                                         </TextField.Slot>
                                     </TextField.Root>
-                                    <Button type='submit' size={'3'} color='orange'>
+                                    <Button disabled={isLoading} type='submit' size={'3'} color='orange'>
                                         Login
                                     </Button>
                                 </Flex>
