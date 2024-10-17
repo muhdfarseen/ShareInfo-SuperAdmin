@@ -5,6 +5,7 @@ import { IconLogout2, IconSun, IconUser, IconMoon } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../../../redux/reducers/theme/themeSlice';
+import { logoutUser } from '../../../redux/reducers/auth/authSlice';
 
 export const Navbar = () => {
     const navigate = useNavigate();
@@ -12,6 +13,11 @@ export const Navbar = () => {
 
     const handleToggleTheme = () => {
         dispatch(toggleTheme());
+    };
+
+    const handleLogOut = () => {
+        dispatch(logoutUser());
+        navigate('/');
     };
 
     const theme = useSelector((state) => state.theme);
@@ -29,13 +35,18 @@ export const Navbar = () => {
                         <Flex gap='3' align='center'>
                             <Box>
                                 <Text align={'right'} as='div' size='2' weight='bold'>
-                                    Akshay Ashokan Pothan
+                                    {localStorage.getItem('full_name')}
                                 </Text>
                                 <Text align={'right'} as='div' size='1' color='gray'>
-                                    Chief Executive Officer
+                                    {localStorage.getItem('designation')}
                                 </Text>
                             </Box>
-                            <Avatar color='orange' size='3' fallback='AA' />
+
+                            <Avatar
+                                color='orange'
+                                size='3'
+                                fallback={localStorage.getItem('full_name').slice(0, 1)}
+                            />
                         </Flex>
                     </DropdownMenu.Trigger>
                     <DropdownMenu.Content
@@ -50,7 +61,7 @@ export const Navbar = () => {
                                 Your Account <IconUser size={15} />
                             </Flex>
                         </DropdownMenu.Item>
-                        <DropdownMenu.Item onSelect={() => handleToggleTheme}>
+                        <DropdownMenu.Item onSelect={handleToggleTheme}>
                             <Flex width={'120px'} align={'center'} justify={'between'}>
                                 {theme === 'light' ? 'Dark Mode' : 'Light Mode'}{' '}
                                 {theme === 'light' ?
@@ -61,7 +72,7 @@ export const Navbar = () => {
                         <DropdownMenu.Separator />
                         <DropdownMenu.Item variant='solid' color='red'>
                             <Flex
-                                onClick={() => navigate('/')}
+                                onClick={handleLogOut}
                                 width={'120px'}
                                 align={'center'}
                                 justify={'between'}>
