@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// No data is Storing in this state data
+
 const initialState = {
     access_token: '',
     refresh_token: '',
@@ -14,36 +16,18 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        loginUser: (state, action) => {
+        loginUser: (_, action) => {
             localStorage.setItem('access_token', action.payload.access_token);
             localStorage.setItem('refresh_token', action.payload.refresh_token);
             localStorage.setItem('email', action.payload.email);
             localStorage.setItem('full_name', action.payload.full_name);
             localStorage.setItem('designation', action.payload.designation);
-
-            state.access_token = action.payload.access_token;
-            state.refresh_token = action.payload.refresh_token;
-            state.email = action.payload.email;
-            state.is_profile_created = action.payload.is_profile_created;
-            state.full_name = action.payload.full_name;
-            state.designation = action.payload.designation;
-            state.profile = action.payload.profile;
         },
-
-        authTokenChange: (state, action) => {
+        authTokenChange: (_, action) => {
             localStorage.setItem('access_token', action.payload.access_token);
-            state.access_token = action.payload.access_token;
         },
-
-        logoutUser: (state) => {
+        logoutUser: () => {
             localStorage.clear();
-            state.access_token = '';
-            state.refresh_token = '';
-            state.email = '';
-            state.is_profile_created = false;
-            state.full_name = '';
-            state.designation = '';
-            state.profile = '';
         }
     }
 });
