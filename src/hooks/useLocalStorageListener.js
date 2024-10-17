@@ -26,7 +26,7 @@ const useLocalStorageListener = () => {
             window.removeEventListener('storage', handleStorageChange);
             clearInterval(intervalId);
         };
-    }, [dispatch, navigate]); 
+    }, [dispatch, navigate]);
 };
 
 /*
