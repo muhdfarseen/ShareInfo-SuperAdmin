@@ -3,7 +3,6 @@ import { IconLayoutDashboardFilled } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-// Reusable Form Section Component
 const FormSection = ({ title, value, onChange, showUpdate, placeholder, type = 'text' }) => (
     <Box width='100%'>
         <Card>
@@ -49,9 +48,9 @@ export const Account = () => {
         }
     };
     // Initial values for comparison
-    const initialName = 'Akshay Ashokan Pothan';
-    const initialEmail = 'akshayashokanpothan@imiot.com';
-    const initialDesignation = 'Chief Executive Officer';
+    const initialName = localStorage.getItem('full_name');
+    const initialEmail = localStorage.getItem('email');
+    const initialDesignation = localStorage.getItem('designation');
 
     // State to track form values
     const [name, setName] = useState(initialName);
@@ -94,7 +93,7 @@ export const Account = () => {
             {/* Head Section */}
             <Flex my={'9'} align={'center'} direction={'column'} justify={'center'}>
                 <Flex width={'70%'} align={'center'} justify={'between'}>
-                    <Heading size={'7'}>Akshay Ashokan Pothan</Heading>
+                    <Heading size={'7'}>{localStorage.getItem('full_name')}</Heading>
                     <Button
                         type='button'
                         onClick={goToPreviousPath}
