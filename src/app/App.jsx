@@ -1,10 +1,9 @@
 import { RouterProvider } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { Toaster } from 'sonner';
 import { router } from '../routes/routes';
 import { Theme } from '@radix-ui/themes';
 import { store } from '../redux/store/configureStore.js';
-import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import '@radix-ui/themes/styles.css';
 import './index.css';
