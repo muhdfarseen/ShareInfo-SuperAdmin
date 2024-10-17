@@ -25,7 +25,7 @@ export const Challenges = () => {
                 <Heading>Challenges</Heading>
             </Box>
 
-            <Flex gap={'6'}>
+            <Flex wrap={'wrap'} gap={'6'}>
                 <Card
                     onClick={() => handleNavigation('practicemode')}
                     className={classes.challengeCard}>

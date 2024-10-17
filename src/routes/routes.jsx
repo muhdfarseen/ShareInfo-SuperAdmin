@@ -1,3 +1,4 @@
+import PrivateRoute from '../providers/PrivateRoute';
 import { createBrowserRouter } from 'react-router-dom';
 import { Login } from '../components/Pages/Login';
 import { NotFound } from '../components/Pages/NotFound';
@@ -17,7 +18,11 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <Dashboard />,
+        element: (
+            <PrivateRoute>
+                <Dashboard />
+            </PrivateRoute>
+        ),
         children: [
             {
                 path: 'challenges',
@@ -47,10 +52,18 @@ export const router = createBrowserRouter([
     },
     {
         path: 'myaccount',
-        element: <MyAccount />
+        element: (
+            <PrivateRoute>
+                <MyAccount />
+            </PrivateRoute>
+        )
     },
     {
         path: '*',
-        element: <NotFound />
+        element: (
+            <PrivateRoute>
+                <NotFound />
+            </PrivateRoute>
+        )
     }
 ]);
