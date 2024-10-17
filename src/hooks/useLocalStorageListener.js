@@ -26,7 +26,12 @@ const useLocalStorageListener = () => {
             window.removeEventListener('storage', handleStorageChange);
             clearInterval(intervalId);
         };
-    }, [dispatch, navigate]); // Include dispatch and navigate in the dependency array
+    }, [dispatch, navigate]); 
 };
+
+/*
+    this hook is listening in DshBoard Layout
+    src/components/Pages/Dashboard.jsx
+*/
 
 export default useLocalStorageListener;
