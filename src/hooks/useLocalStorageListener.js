@@ -7,15 +7,15 @@ const useLocalStorageListener = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleStorageChange = () => {
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-            dispatch(logoutUser());
-            navigate('/');
-        }
-    };
-
     useEffect(() => {
+        const handleStorageChange = () => {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                dispatch(logoutUser());
+                navigate('/');
+            }
+        };
+
         window.addEventListener('storage', handleStorageChange);
 
         const intervalId = setInterval(() => {
@@ -26,9 +26,7 @@ const useLocalStorageListener = () => {
             window.removeEventListener('storage', handleStorageChange);
             clearInterval(intervalId);
         };
-    }, [dispatch]);
+    }, [dispatch, navigate]); // Include dispatch and navigate in the dependency array
 };
 
-//this hook is listening in DshBoard Layout
-// src/components/Pages/Dashboard.jsx
 export default useLocalStorageListener;
