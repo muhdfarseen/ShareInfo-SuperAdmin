@@ -1,15 +1,22 @@
-import { useContext } from 'react';
 import { Flex, Box, Text, Separator, Avatar, DropdownMenu } from '@radix-ui/themes';
 import ShareinfoNavLogo from '../../../assets/Images/ShareinfoNavLogo.svg';
 import ShareinfoNavLogoDark from '../../../assets/Images/ShareinfoNavLogo forDark.svg';
 import { IconLogout2, IconSun, IconUser, IconMoon } from '@tabler/icons-react';
-import { ThemeContext } from '../../../app/main';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleTheme } from '../../../redux/reducers/theme/themeSlice';
 
 export const Navbar = () => {
-    const { theme, toggleTheme } = useContext(ThemeContext);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleToggleTheme = () => {
+        dispatch(toggleTheme()); 
+    };
+
+    const theme = useSelector((state) => state.theme);
+
 
     return (
         <div style={{ backdropFilter: 'blur(5px)' }}>
@@ -45,7 +52,7 @@ export const Navbar = () => {
                                 Your Account <IconUser size={15} />
                             </Flex>
                         </DropdownMenu.Item>
-                        <DropdownMenu.Item onSelect={toggleTheme}>
+                        <DropdownMenu.Item onSelect={() => handleToggleTheme}>
                             <Flex width={'120px'} align={'center'} justify={'between'}>
                                 {theme === 'light' ? 'Dark Mode' : 'Light Mode'}{' '}
                                 {theme === 'light' ?

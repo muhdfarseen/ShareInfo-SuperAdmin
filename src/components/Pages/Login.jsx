@@ -1,29 +1,26 @@
 import { Card, Button, Flex, TextField, Box, Badge } from '@radix-ui/themes';
 import { IconMail, IconKey } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from '../../app/main';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { ENDPOINTS } from '../../config/api-end-points';
 import ShareinfoNavLogo from '../../assets/Images/ShareinfoNavLogo.svg';
 import ShareinfoNavLogoDark from '../../assets/Images/ShareinfoNavLogo forDark.svg';
 import axios from 'axios';
-import { toast } from 'sonner';
+import { useSelector } from 'react-redux';
 
 export const Login = () => {
     const navigate = useNavigate();
-    const { theme } = useContext(ThemeContext);
+
+    const theme = useSelector((state) => state.theme);
+
     const { register, handleSubmit } = useForm();
 
     const handleLogin = handleSubmit(async (data) => {
         try {
-            const response = await axios.post(ENDPOINTS.login, data, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await axios.post(ENDPOINTS.login, data);
             console.log(response);
-            toast.success('Successfully toasted!');
+            toast.success('Welcome Back!');
             navigate('/dashboard');
         } catch (error) {
             toast.error(error.message);

@@ -1,19 +1,19 @@
-import { useContext } from 'react';
 import { Box, Heading, Card, Flex, IconButton } from '@radix-ui/themes';
 import { IconArrowUpRight } from '@tabler/icons-react';
 import classes from './Challenges.module.css';
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from '../../../../app/main';
 
 import practiceImageLight from '../../../../assets/Images/PracticeModeforlight.png';
 import practiceImageDark from '../../../../assets/Images/PracticeMode.png';
 
 import jobHuntImageLight from '../../../../assets/Images/JobHuntModelight.png';
 import jobHuntImageDark from '../../../../assets/Images/JobHuntMode.png';
+import { useSelector } from 'react-redux';
 
 export const Challenges = () => {
     const navigate = useNavigate();
-    const { theme } = useContext(ThemeContext);
+
+    const theme = useSelector((state) => state.theme);
 
     const handleNavigation = (path) => {
         navigate(`/dashboard/${path}`);
