@@ -9,7 +9,8 @@ import ReactDOM from 'react-dom/client';
 import '@radix-ui/themes/styles.css';
 import './index.css';
 
-const App = () => {
+// Export the App component
+export const App = () => {
     const theme = useSelector((state) => state.theme);
 
     return (
@@ -20,7 +21,8 @@ const App = () => {
     );
 };
 
-const Main = () => {
+// Export the Main component
+export const Main = () => {
     return (
         <Provider store={store}>
             <App />
