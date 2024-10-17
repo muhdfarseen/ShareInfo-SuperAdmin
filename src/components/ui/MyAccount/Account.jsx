@@ -48,9 +48,10 @@ export const Account = () => {
         }
     };
     // Initial values for comparison
-    const initialName = localStorage.getItem('full_name');
-    const initialEmail = localStorage.getItem('email');
-    const initialDesignation = localStorage.getItem('designation');
+    const initialName = localStorage.getItem('full_name') ? localStorage.getItem('full_name') : '';
+    const initialEmail = localStorage.getItem('email') ? localStorage.getItem('email') : '';
+    const initialDesignation =
+        localStorage.getItem('designation') ? localStorage.getItem('designation') : '';
 
     // State to track form values
     const [name, setName] = useState(initialName);
