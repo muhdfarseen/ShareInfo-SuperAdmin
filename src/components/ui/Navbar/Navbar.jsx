@@ -7,16 +7,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleTheme } from '../../../redux/reducers/theme/themeSlice';
 
 export const Navbar = () => {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleToggleTheme = () => {
-        dispatch(toggleTheme()); 
+        dispatch(toggleTheme());
     };
 
     const theme = useSelector((state) => state.theme);
-
 
     return (
         <div style={{ backdropFilter: 'blur(5px)' }}>

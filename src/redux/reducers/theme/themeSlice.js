@@ -23,8 +23,8 @@ const themeSlice = createSlice({
             const theme = action.payload;
             localStorage.setItem('theme', theme);
             return theme;
-        },
-    },
+        }
+    }
 });
 
 export const { toggleTheme, setTheme } = themeSlice.actions;
