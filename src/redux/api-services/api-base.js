@@ -1,6 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ENDPOINTS } from '../../config/api-end-points';
-import { authTokenChange, logoutUser } from '../reducers/auth/authSlice'; 
+import { authTokenChange, logoutUser } from '../reducers/auth/authSlice';
 
 export const baseQuery = fetchBaseQuery({
     baseUrl: ENDPOINTS.BASE_URL,

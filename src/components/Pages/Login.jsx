@@ -21,12 +21,12 @@ export const Login = () => {
         try {
             loadingToastId = toast.loading('Logging in...');
             const response = await loginApiCall(data).unwrap();
-            toast.dismiss(loadingToastId); 
+            toast.dismiss(loadingToastId);
             toast.success('Welcome Back!');
             dispatch(loginUser(response));
             navigate('/dashboard');
         } catch (error) {
-            toast.dismiss(loadingToastId); 
+            toast.dismiss(loadingToastId);
             toast.error('Login failed, ' + (error.data?.message || 'try again'));
         }
     });
@@ -85,7 +85,11 @@ export const Login = () => {
                                             <IconKey height='16' width='16' />
                                         </TextField.Slot>
                                     </TextField.Root>
-                                    <Button disabled={isLoading} type='submit' size={'3'} color='orange'>
+                                    <Button
+                                        disabled={isLoading}
+                                        type='submit'
+                                        size={'3'}
+                                        color='orange'>
                                         Login
                                     </Button>
                                 </Flex>
