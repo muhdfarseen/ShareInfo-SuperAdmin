@@ -1,5 +1,3 @@
-
-
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const ENDPOINTS = {
@@ -7,8 +5,8 @@ const ENDPOINTS = {
 
     login: '/login/',
     refresh: '/token/refresh/',
-    practiceList:'/practice/list/',
-    categoryList:'/category/'
+    practiceList: '/practice/list/',
+    categoryList: '/category/'
 };
 
 export { ENDPOINTS };
