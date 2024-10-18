@@ -6,9 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { useGetPracticeListQuery } from '../../../../redux/api-services/practiceApi';
 import { IconAlertTriangle, IconCircleNumber0 } from '@tabler/icons-react';
 
-export const GridCard = () => {
+export const GridCard = ({ searchQuery, selectedCategory }) => {
     const { data, error, isLoading } = useGetPracticeListQuery();
     const navigate = useNavigate();
+
+    // Filter data based on search and category
+    const filteredData = data
+        ?.filter((item) => 
+            (selectedCategory === 'seeall' || item.category === selectedCategory) &&
+            item.practice_task.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
     if (isLoading)
         return (
@@ -28,14 +35,14 @@ export const GridCard = () => {
             </Flex>
         );
 
-    if (!data || data.length === 0)
+    if (!filteredData || filteredData.length === 0)
         return (
             <Flex align={'center'} justify={'center'} height={'300px'}>
                 <Callout.Root variant='surface' color='gray'>
                     <Callout.Icon>
                         <IconCircleNumber0 stroke={1} />
                     </Callout.Icon>
-                    <Callout.Text>No Practice Tasks added yet</Callout.Text>
+                    <Callout.Text>No Practice Tasks found</Callout.Text>
                 </Callout.Root>
             </Flex>
         );
@@ -43,7 +50,7 @@ export const GridCard = () => {
     return (
         <div>
             <Grid my={'6'} columns={{ initial: '1', sm: '2', md: '3' }} gap='6' width='auto'>
-                {data.map((item) => (
+                {filteredData.map((item) => (
                     <Card
                         onClick={() => navigate('/dashboard/managetask')}
                         key={item.practice_id}

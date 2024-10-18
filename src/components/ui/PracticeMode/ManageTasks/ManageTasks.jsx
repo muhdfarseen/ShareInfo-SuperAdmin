@@ -2,31 +2,43 @@ import { Box, Text, Flex, TextField, Select, Button } from '@radix-ui/themes';
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { GridCard } from './GridCard';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useGetCategoryListQuery } from '../../../../redux/api-services/practiceApi';
 
 export const ManageTasks = () => {
     const navigate = useNavigate();
+    const { data: categories } = useGetCategoryListQuery();
 
-    const { data } = useGetCategoryListQuery();
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('seeall');
 
     return (
         <Box style={{ padding: '40px 40px 0 40px', width: '100%' }} width={'100%'}>
             <Flex justify={'between'} align={'center'}>
                 {/* left section group */}
                 <Flex gap={'4'} align={'center'}>
-                    <TextField.Root size='2' placeholder='Search'>
+                    <TextField.Root
+                        placeholder='Search'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        size='2'>
                         <TextField.Slot>
                             <IconSearch height='16' width='16' />
                         </TextField.Slot>
                     </TextField.Root>
 
-                    {data && (
-                        <Select.Root searchable size='2'>
+                    {categories && (
+                        <Select.Root
+                            defaultValue='seeall'
+                            size='2'
+                            onValueChange={setSelectedCategory}>
                             <Select.Trigger placeholder='Category'></Select.Trigger>
                             <Select.Content>
                                 <Select.Group>
+                                    <Select.Item value='seeall'>See all</Select.Item>
+                                    <Select.Separator />
                                     <Select.Label>Category</Select.Label>
-                                    {data?.map((item) => (
+                                    {categories.map((item) => (
                                         <Select.Item key={item.id} value={item.category}>
                                             {item.category}
                                         </Select.Item>
@@ -50,7 +62,7 @@ export const ManageTasks = () => {
                 </Flex>
             </Flex>
 
-            <GridCard />
+            <GridCard searchQuery={searchQuery} selectedCategory={selectedCategory} />
         </Box>
     );
 };
