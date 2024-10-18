@@ -20,8 +20,11 @@ export const baseQueryWithReauth = async (args, store, extraOptions) => {
     let result = await baseQuery(args, store, extraOptions);
 
     if (result.error && result.error.status === 401) {
+       
         const refreshToken = localStorage.getItem('refresh_token');
+
         if (refreshToken) {
+            console.log('Trying to get new access token');
             const refreshResult = await baseQuery(
                 {
                     url: `${ENDPOINTS.refresh}`,
@@ -34,6 +37,7 @@ export const baseQueryWithReauth = async (args, store, extraOptions) => {
             if (refreshResult.data) {
                 localStorage.setItem('access_token', refreshResult.data.access_token);
                 //SECOND TRY
+                
                 result = await baseQuery(args, store, extraOptions);
             } else {
                 console.error('Failed to refresh token:', refreshResult.error);
