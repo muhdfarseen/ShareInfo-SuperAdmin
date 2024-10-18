@@ -16,14 +16,12 @@ export const baseQuery = fetchBaseQuery({
 });
 
 export const baseQueryWithReauth = async (args, store, extraOptions) => {
-    //FIRST TRY
     let result = await baseQuery(args, store, extraOptions);
 
     if (result.error && result.error.status === 401) {
         const refreshToken = localStorage.getItem('refresh_token');
 
         if (refreshToken) {
-            console.log('Trying to get new access token');
             const refreshResult = await baseQuery(
                 {
                     url: `${ENDPOINTS.refresh}`,
@@ -35,15 +33,14 @@ export const baseQueryWithReauth = async (args, store, extraOptions) => {
             );
             if (refreshResult.data) {
                 localStorage.setItem('access_token', refreshResult.data.access_token);
-                //SECOND TRY
 
                 result = await baseQuery(args, store, extraOptions);
             } else {
-                console.error('Failed to refresh token:', refreshResult.error);
+                //console.error('Failed to refresh token:', refreshResult.error);
                 store.dispatch(logoutUser());
             }
         } else {
-            console.warn('No refresh token found. Logging out...');
+            //console.warn('No refresh token found. Logging out...');
             store.dispatch(logoutUser());
         }
     }
