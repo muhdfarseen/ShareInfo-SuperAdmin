@@ -1,100 +1,114 @@
 import { Button, Flex, Heading, Text, TextField, Card, Box, Separator } from '@radix-ui/themes';
 import { IconLayoutDashboardFilled } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const FormSection = ({ title, value, onChange, showUpdate, placeholder, type = 'text' }) => (
-    <Box width='100%'>
-        <Card>
-            <Flex p={'4'} justify={'between'}>
-                <Box>
-                    <Heading size={'4'}>{title}</Heading>
-                </Box>
-                <Box width={'50%'}>
-                    <Text>{title}</Text>
-                    <TextField.Root
-                        mt={'2'}
-                        width={'100%'}
-                        size={'3'}
-                        color='orange'
-                        value={value}
-                        onChange={onChange}
-                        placeholder={placeholder}
-                        type={type}></TextField.Root>
-                    {showUpdate && (
-                        <Flex mt={'4'} align={'end'} direction={'column'} width={'100%'}>
-                            <Button color='orange' width={'contents'}>
-                                Update
-                            </Button>
-                        </Flex>
-                    )}
-                </Box>
-            </Flex>
-        </Card>
-    </Box>
-);
+import {
+    useGetProfileQuery,
+    useUpdateProfileMutation,
+    useResetPasswordMutation
+} from '../../../redux/api-services/practiceApi';
+import { toast } from 'sonner';
 
 export const Account = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { data, refetch } = useGetProfileQuery();
 
-    const goToPreviousPath = (e) => {
-        e.preventDefault();
-        // Check if there's a previous page to go back to
-        if (location.key !== 'default') {
-            navigate(-1); // Go back to the previous page if exists
-        } else {
-            navigate('/dashboard'); // Fallback to dashboard
-        }
-    };
-    // Initial values for comparison
-    const initialName = localStorage.getItem('full_name') ? localStorage.getItem('full_name') : '';
-    const initialEmail = localStorage.getItem('email') ? localStorage.getItem('email') : '';
-    const initialDesignation =
-        localStorage.getItem('designation') ? localStorage.getItem('designation') : '';
+    const [updateProfile] = useUpdateProfileMutation();
+    const [resetPassword] = useResetPasswordMutation();
 
-    // State to track form values
-    const [name, setName] = useState(initialName);
-    const [email, setEmail] = useState(initialEmail);
-    const [designation, setDesignation] = useState(initialDesignation);
+    const [firstName, setFirstName] = useState('');
+    const [middleName, setMiddleName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [designation, setDesignation] = useState('');
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
-    // State to track visibility of the "Update" button for each section
-    const [showUpdateName, setShowUpdateName] = useState(false);
-    const [showUpdateEmail, setShowUpdateEmail] = useState(false);
-    const [showUpdatePassword, setShowUpdatePassword] = useState(false);
-    const [showUpdateDesignation, setShowUpdateDesignation] = useState(false);
+    const [showDesignationButton, setShowDesignationButton] = useState(false);
 
-    // Handlers for input changes
-    const handleNameChange = (e) => {
-        setName(e.target.value);
-        setShowUpdateName(e.target.value !== initialName);
+    useEffect(() => {
+        if (data) {
+            setDesignation(data.designation);
+            setFirstName(data.first_name || '');
+            setMiddleName(data.middle_name || '');
+            setLastName(data.last_name || '');
+        }
+    }, [data]);
+
+    useEffect(() => {
+        if (data?.designation && designation !== data.designation) {
+            setShowDesignationButton(true);
+        } else {
+            setShowDesignationButton(false);
+        }
+    }, [designation, data?.designation]);
+
+    const handleNameUpdate = async () => {
+        const loadingToastId = toast.loading('Updating name...');
+        try {
+            await updateProfile({
+                first_name: firstName,
+                middle_name: middleName,
+                last_name: lastName
+            }).unwrap();
+            refetch();
+            toast.success('Name updated successfully!', {
+                id: loadingToastId
+            });
+            setFirstName('');
+            setLastName('');
+            setLastName('');
+        } catch (error) {
+            toast.error(`Failed to update name.. ${error?.data?.message}`, {
+                id: loadingToastId
+            });
+        }
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-        setShowUpdateEmail(e.target.value !== initialEmail);
+    const handleDesignationUpdate = async () => {
+        const loadingToastId = toast.loading('Updating designation...');
+        try {
+            await updateProfile({ designation }).unwrap();
+            refetch();
+            toast.success('Designation updated successfully!', {
+                id: loadingToastId
+            });
+        } catch (error) {
+            toast.error(`Failed to update designation.. ${error?.data?.message}`, {
+                id: loadingToastId
+            });
+        }
     };
 
-    const handleDesignationChange = (e) => {
-        setDesignation(e.target.value);
-        setShowUpdateDesignation(e.target.value !== initialDesignation);
+    const handlePasswordReset = async () => {
+        const loadingToastId = toast.loading('Updating password...');
+        try {
+            await resetPassword({ old_password: oldPassword, new_password: newPassword }).unwrap();
+            setOldPassword('');
+            setNewPassword('');
+            toast.success('Password updated successfully!', { id: loadingToastId });
+        } catch (error) {
+            toast.error(`Failed to update password.. ${error.data.message}`, {
+                id: loadingToastId
+            });
+        }
     };
 
-    const handlePasswordChange = (setter, originalValue, setButtonVisible) => (e) => {
-        setter(e.target.value);
-        setButtonVisible(
-            e.target.value !== originalValue && (oldPassword !== '' || newPassword !== '')
-        );
+    const goToPreviousPath = (e) => {
+        e.preventDefault();
+        if (location.key !== 'default') {
+            navigate(-1);
+        } else {
+            navigate('/dashboard');
+        }
     };
 
     return (
         <>
-            {/* Head Section */}
+            {/* Header Section */}
             <Flex my={'9'} align={'center'} direction={'column'} justify={'center'}>
                 <Flex width={'70%'} align={'center'} justify={'between'}>
-                    <Heading size={'7'}>{localStorage.getItem('full_name')}</Heading>
+                    <Heading size={'7'}>{data?.name}</Heading>
                     <Button
                         type='button'
                         onClick={goToPreviousPath}
@@ -108,6 +122,8 @@ export const Account = () => {
             </Flex>
 
             <Separator size={'4'} my={'0'} />
+
+            {/* Main Content */}
             <Flex
                 style={{ backgroundColor: 'var(--gray-2' }}
                 align={'center'}
@@ -120,28 +136,122 @@ export const Account = () => {
                     direction={'column'}
                     align={'center'}
                     justify={'center'}>
-                    {/* Reusable Sections */}
-                    <FormSection
-                        title='Name'
-                        value={name}
-                        onChange={handleNameChange}
-                        showUpdate={showUpdateName}
-                        placeholder='Username'
-                    />
-                    <FormSection
-                        title='Designation'
-                        value={designation}
-                        onChange={handleDesignationChange}
-                        showUpdate={showUpdateDesignation}
-                        placeholder='Designation'
-                    />
-                    <FormSection
-                        title='Email'
-                        value={email}
-                        onChange={handleEmailChange}
-                        showUpdate={showUpdateEmail}
-                        placeholder='Email'
-                    />
+                    {/* Name Section */}
+                    <Box width='100%'>
+                        <Card>
+                            <Flex p={'4'} justify={'between'}>
+                                <Box>
+                                    <Heading size={'4'}>Name</Heading>
+                                </Box>
+                                <Box width={'50%'}>
+                                    <Text>Name</Text>
+                                    <Flex gap={'2'}>
+                                        <TextField.Root
+                                            mt={'2'}
+                                            width={'100%'}
+                                            size={'3'}
+                                            color='orange'
+                                            value={firstName}
+                                            placeholder='First name'
+                                            onChange={(e) => setFirstName(e.target.value)}
+                                        />
+                                        <TextField.Root
+                                            mt={'2'}
+                                            width={'100%'}
+                                            size={'3'}
+                                            color='orange'
+                                            value={middleName}
+                                            placeholder='Middle name'
+                                            onChange={(e) => setMiddleName(e.target.value)}
+                                        />
+                                        <TextField.Root
+                                            mt={'2'}
+                                            width={'100%'}
+                                            size={'3'}
+                                            color='orange'
+                                            value={lastName}
+                                            placeholder='Last name'
+                                            onChange={(e) => setLastName(e.target.value)}
+                                        />
+                                    </Flex>
+                                    {firstName || middleName || lastName ?
+                                        <Flex
+                                            mt={'4'}
+                                            align={'end'}
+                                            direction={'column'}
+                                            width={'100%'}>
+                                            <Button
+                                                color='orange'
+                                                width={'contents'}
+                                                onClick={handleNameUpdate}>
+                                                Update Name
+                                            </Button>
+                                        </Flex>
+                                    :   null}
+                                </Box>
+                            </Flex>
+                        </Card>
+                    </Box>
+
+                    {/* Designation Section */}
+                    <Box width='100%'>
+                        <Card>
+                            <Flex p={'4'} justify={'between'}>
+                                <Box>
+                                    <Heading size={'4'}>Designation</Heading>
+                                </Box>
+                                <Box width={'50%'}>
+                                    <Text>Designation</Text>
+                                    <TextField.Root
+                                        mt={'2'}
+                                        width={'100%'}
+                                        size={'3'}
+                                        color='orange'
+                                        value={designation}
+                                        placeholder='Designation'
+                                        onChange={(e) => setDesignation(e.target.value)}
+                                    />
+                                    {showDesignationButton && (
+                                        <Flex
+                                            mt={'4'}
+                                            align={'end'}
+                                            direction={'column'}
+                                            width={'100%'}>
+                                            <Button
+                                                color='orange'
+                                                width={'contents'}
+                                                onClick={handleDesignationUpdate}>
+                                                Update Designation
+                                            </Button>
+                                        </Flex>
+                                    )}
+                                </Box>
+                            </Flex>
+                        </Card>
+                    </Box>
+
+                    {/* Email Section */}
+                    <Box width='100%'>
+                        <Card>
+                            <Flex p={'4'} justify={'between'}>
+                                <Box>
+                                    <Heading size={'4'}>Email</Heading>
+                                </Box>
+                                <Box width={'50%'}>
+                                    <Text>Email</Text>
+                                    <TextField.Root
+                                        mt={'2'}
+                                        width={'100%'}
+                                        size={'3'}
+                                        color='orange'
+                                        value={data?.email}
+                                        placeholder='Email'
+                                        disabled
+                                    />
+                                </Box>
+                            </Flex>
+                        </Card>
+                    </Box>
 
                     {/* Password Section */}
                     <Box width='100%'>
@@ -153,42 +263,41 @@ export const Account = () => {
                                 <Box width={'50%'}>
                                     <Text>Old Password</Text>
                                     <TextField.Root
+                                        type='password'
                                         mt={'2'}
                                         width={'100%'}
                                         size={'3'}
                                         color='orange'
                                         value={oldPassword}
-                                        onChange={handlePasswordChange(
-                                            setOldPassword,
-                                            '',
-                                            setShowUpdatePassword
-                                        )}
-                                        placeholder='Enter password'></TextField.Root>
+                                        placeholder='Enter old password'
+                                        onChange={(e) => setOldPassword(e.target.value)}
+                                    />
 
                                     <Text as='div' mt={'5'}>
                                         New Password
                                     </Text>
                                     <TextField.Root
+                                        type='password'
                                         mt={'2'}
                                         width={'100%'}
                                         size={'3'}
                                         color='orange'
                                         value={newPassword}
-                                        onChange={handlePasswordChange(
-                                            setNewPassword,
-                                            '',
-                                            setShowUpdatePassword
-                                        )}
-                                        placeholder='Enter password'></TextField.Root>
+                                        placeholder='Enter new password'
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                    />
 
-                                    {showUpdatePassword && (
+                                    {newPassword && oldPassword && (
                                         <Flex
                                             mt={'4'}
                                             align={'end'}
                                             direction={'column'}
                                             width={'100%'}>
-                                            <Button color='orange' width={'contents'}>
-                                                Update
+                                            <Button
+                                                color='orange'
+                                                width={'contents'}
+                                                onClick={handlePasswordReset}>
+                                                Reset Password
                                             </Button>
                                         </Flex>
                                     )}

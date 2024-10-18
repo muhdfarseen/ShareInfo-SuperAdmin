@@ -23,6 +23,20 @@ export const practiiceApi = createApi({
         }),
         getLeaderboardWeakly: builder.query({
             query: () => ENDPOINTS.leaderboardWeakly
+        }),
+        updateProfile: builder.mutation({
+            query: (profileData) => ({
+                url: ENDPOINTS.profile,
+                method: 'PUT',
+                body: profileData
+            })
+        }),
+        resetPassword: builder.mutation({
+            query: (passwordData) => ({
+                url: ENDPOINTS.resetPassword,
+                method: 'POST',
+                body: passwordData
+            })
         })
     })
 });
@@ -33,5 +47,7 @@ export const {
     useGetCategoryListQuery,
     useGetLeaderboardGlobalQuery,
     useGetLeaderboardMonthlyQuery,
-    useGetLeaderboardWeaklyQuery
+    useGetLeaderboardWeaklyQuery,
+    useUpdateProfileMutation,
+    useResetPasswordMutation
 } = practiiceApi;
