@@ -1,38 +1,41 @@
 import { Box, Flex, RadioCards, Text } from '@radix-ui/themes';
-import { MonthlyTable } from './MonthlyTable';
-import { WeeklyTable } from './WeeklyTable';
+import { LeaderboardTable } from './LeaderboardTable';
 import { useState } from 'react';
+import { IconTrendingUp, IconCalendarMonth, IconCalendarWeek } from '@tabler/icons-react';
 
 export const Leaderboard = () => {
-    const [value, setValue] = useState('1');
-
+    const [value, setValue] = useState('0');
     return (
         <div>
             <Box style={{ padding: '30px 40px 30px 40px', width: '100%' }} width={'100%'}>
                 <Box mb={'6'} maxWidth='600px'>
                     <RadioCards.Root
                         variant='classic'
-                        onValueChange={(value) => setValue(value)}
-                        defaultValue='1'
+                        onValueChange={(newValue) => setValue(newValue)}
+                        value={value}
                         columns={{ initial: '1', sm: '3' }}>
+                        <RadioCards.Item value='0'>
+                            <Flex align={'center'} gap={'2'} width='100%'>
+                                <IconTrendingUp size={18} />
+                                <Text weight='bold'>Global Ranking</Text>
+                            </Flex>
+                        </RadioCards.Item>
                         <RadioCards.Item value='1'>
-                            <Flex direction='column' width='100%'>
+                            <Flex align={'center'} gap={'2'} width='100%'>
+                                <IconCalendarMonth size={18} />
                                 <Text weight='bold'>Monthly Ranking</Text>
-                                <Text>September</Text>
                             </Flex>
                         </RadioCards.Item>
                         <RadioCards.Item value='2'>
-                            <Flex direction='column' width='100%'>
+                            <Flex align={'center'} gap={'2'} width='100%'>
+                                <IconCalendarWeek size={18} />
                                 <Text weight='bold'>Weekly Ranking</Text>
-                                <Text>16-22 Sep</Text>
                             </Flex>
                         </RadioCards.Item>
                     </RadioCards.Root>
                 </Box>
 
-                {value === '1' ?
-                    <MonthlyTable />
-                :   <WeeklyTable />}
+                <LeaderboardTable option={value} />
             </Box>
         </div>
     );

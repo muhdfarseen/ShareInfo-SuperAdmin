@@ -6,7 +6,11 @@ const ENDPOINTS = {
     login: '/login/',
     refresh: '/token/refresh/',
     practiceList: '/practice/list/',
-    categoryList: '/category/'
+    categoryList: '/category/',
+
+    leaderboardGlobal: '/practice/leaderboard/global/',
+    leaderboardMonthly: '/practice/leaderboard/monthly/',
+    leaderboardWeakly: '/practice/leaderboard/weakly/'
 };
 
 export { ENDPOINTS };

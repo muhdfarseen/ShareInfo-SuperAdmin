@@ -11,8 +11,23 @@ export const practiiceApi = createApi({
         }),
         getCategoryList: builder.query({
             query: () => ENDPOINTS.categoryList
+        }),
+        getLeaderboardGlobal: builder.query({
+            query: () => ENDPOINTS.leaderboardGlobal
+        }),
+        getLeaderboardMonthly: builder.query({
+            query: () => ENDPOINTS.leaderboardMonthly
+        }),
+        getLeaderboardWeakly: builder.query({
+            query: () => ENDPOINTS.leaderboardWeakly
         })
     })
 });
 
-export const { useGetPracticeListQuery, useGetCategoryListQuery } = practiiceApi;
+export const {
+    useGetPracticeListQuery,
+    useGetCategoryListQuery,
+    useGetLeaderboardGlobalQuery,
+    useGetLeaderboardMonthlyQuery,
+    useGetLeaderboardWeaklyQuery
+} = practiiceApi;
