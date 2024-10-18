@@ -6,6 +6,9 @@ export const practiiceApi = createApi({
     reducerPath: 'practiiceApi',
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
+        getProfile: builder.query({
+            query: () => ENDPOINTS.profile
+        }),
         getPracticeList: builder.query({
             query: () => ENDPOINTS.practiceList
         }),
@@ -25,6 +28,7 @@ export const practiiceApi = createApi({
 });
 
 export const {
+    useGetProfileQuery,
     useGetPracticeListQuery,
     useGetCategoryListQuery,
     useGetLeaderboardGlobalQuery,

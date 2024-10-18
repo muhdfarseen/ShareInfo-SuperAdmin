@@ -19,9 +19,6 @@ const authSlice = createSlice({
         loginUser: (_, action) => {
             localStorage.setItem('access_token', action.payload.access_token);
             localStorage.setItem('refresh_token', action.payload.refresh_token);
-            localStorage.setItem('email', action.payload.email);
-            localStorage.setItem('full_name', action.payload.full_name);
-            localStorage.setItem('designation', action.payload.designation);
         },
         authTokenChange: (_, action) => {
             localStorage.setItem('access_token', action.payload.access_token);

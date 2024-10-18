@@ -6,10 +6,12 @@ import { toggleTheme } from '../../../redux/reducers/theme/themeSlice';
 import { logoutUser } from '../../../redux/reducers/auth/authSlice';
 import ShareinfoNavLogo from '../../../assets/Images/ShareinfoNavLogo.svg';
 import ShareinfoNavLogoDark from '../../../assets/Images/ShareinfoNavLogo forDark.svg';
+import { useGetProfileQuery } from '../../../redux/api-services/practiceApi';
 
 export const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { data } = useGetProfileQuery();
 
     const handleToggleTheme = () => {
         dispatch(toggleTheme());
@@ -35,17 +37,17 @@ export const Navbar = () => {
                         <Flex gap='3' align='center'>
                             <Box>
                                 <Text align={'right'} as='div' size='2' weight='bold'>
-                                    {localStorage.getItem('full_name') || ''}
+                                    {data?.name || ''}
                                 </Text>
                                 <Text align={'right'} as='div' size='1' color='gray'>
-                                    {localStorage.getItem('designation') || ''}
+                                    {data?.designation || ''}
                                 </Text>
                             </Box>
 
                             <Avatar
                                 color='orange'
                                 size='3'
-                                fallback={localStorage.getItem('full_name')?.slice(0, 1) || ''}
+                                fallback={data?.name?.slice(0, 1) || ''}
                             />
                         </Flex>
                     </DropdownMenu.Trigger>
