@@ -11,11 +11,11 @@ export const GridCard = ({ searchQuery, selectedCategory }) => {
     const navigate = useNavigate();
 
     // Filter data based on search and category
-    const filteredData = data
-        ?.filter((item) => 
+    const filteredData = data?.filter(
+        (item) =>
             (selectedCategory === 'seeall' || item.category === selectedCategory) &&
             item.practice_task.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+    );
 
     if (isLoading)
         return (
