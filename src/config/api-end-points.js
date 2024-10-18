@@ -15,7 +15,7 @@ const ENDPOINTS = {
     leaderboardMonthly: '/practice/leaderboard/monthly/',
     leaderboardWeakly: '/practice/leaderboard/weakly/',
 
-    resetPassword : '/reset-password/'
+    resetPassword: '/reset-password/'
 };
 
 export { ENDPOINTS };
