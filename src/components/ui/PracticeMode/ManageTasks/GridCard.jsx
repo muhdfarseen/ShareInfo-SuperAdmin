@@ -3,7 +3,10 @@ import { Card } from '@radix-ui/themes';
 import shareInfoCoin from '../../../../assets/Images/ShareInfocoin.svg';
 import classes from './GridCard.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useGetPracticeListQuery } from '../../../../redux/api-services/practiceApi';
+import {
+   
+    useGetPracticeListQuery
+} from '../../../../redux/api-services/practiceApi';
 import { IconAlertTriangle, IconCircleNumber0 } from '@tabler/icons-react';
 
 export const GridCard = ({ searchQuery, selectedCategory }) => {
@@ -17,6 +20,7 @@ export const GridCard = ({ searchQuery, selectedCategory }) => {
             item.practice_task.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    
     if (isLoading)
         return (
             <Flex align={'center'} justify={'center'} height={'300px'}>
@@ -52,7 +56,7 @@ export const GridCard = ({ searchQuery, selectedCategory }) => {
             <Grid my={'6'} columns={{ initial: '1', sm: '2', md: '3' }} gap='6' width='auto'>
                 {filteredData.map((item) => (
                     <Card
-                        onClick={() => navigate('/dashboard/managetask')}
+                        onClick={() => navigate(`/dashboard/managetask/${item.practice_id}`)}
                         key={item.practice_id}
                         className={classes.cardhover}>
                         <Flex
@@ -81,6 +85,7 @@ export const GridCard = ({ searchQuery, selectedCategory }) => {
 
                                 <Flex mt={'2'} wrap={'wrap'} gap={'2'}>
                                     <Badge
+                                        color={item.category_color}
                                         style={{ width: 'fit-content', height: '28px' }}
                                         variant='surface'
                                         size={'2'}

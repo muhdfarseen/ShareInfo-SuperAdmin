@@ -1,17 +1,30 @@
-import { Heading, Flex, Link, Tabs, Separator } from '@radix-ui/themes';
-import { IconChevronRight } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { Heading, Flex, Link, Tabs, Separator, Button } from '@radix-ui/themes';
+import { IconChevronRight, IconArrowBackUp } from '@tabler/icons-react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { TaskWiseTable } from '../../../../ui/PracticeMode/ManageSingleTask/Leaderboard/TaskWiseTable';
 import { TaskDetails } from '../../../../ui/PracticeMode/ManageSingleTask/TaskDetails/TaskDetails';
 import { Submissions } from '../../../../ui/PracticeMode/ManageSingleTask/Submissions/Submissions';
+import { useGetPracticeAboutAndStepsQuery } from '../../../../../redux/api-services/practiceApi';
 
 export const TaskPage = () => {
     const navigate = useNavigate();
     const [selectedTab, setSelectedTab] = useState('taskdetails');
 
+    const { id } = useParams();
+    const { data } = useGetPracticeAboutAndStepsQuery(id);
+
     const handleNavigation = (path) => {
         navigate(`/dashboard/${path}`);
+    };
+
+    const goToPreviousPath = (e) => {
+        e.preventDefault();
+        if (location.key !== 'default') {
+            navigate(-1);
+        } else {
+            navigate('/dashboard');
+        }
     };
 
     return (
@@ -53,7 +66,19 @@ export const TaskPage = () => {
                 </Flex>
 
                 <Flex width={'100%'} direction={'column'}>
-                    <Heading>Mastering UI/UX Design Fundamentals</Heading>
+                    <Flex width={'100%'} align={'center'} justify={'between'}>
+                        <Heading>{data?.practice_task}</Heading>
+                        <Button
+                        type='button'
+                        onClick={goToPreviousPath}
+                        size={'2'}
+                        variant='soft'
+                        color='gray'>
+                        <IconArrowBackUp style={{ zIndex: '0' }} size={15} />
+                        Go Back
+                    </Button>
+                    </Flex>
+
                     <Tabs.Root
                         onValueChange={(value) => setSelectedTab(value)}
                         mt={'7'}

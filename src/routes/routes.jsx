@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
                 element: <PracticeMode />
             },
             {
-                path: 'managetask',
+                path: 'managetask/:id',
                 element: <TaskPage />
             },
             {

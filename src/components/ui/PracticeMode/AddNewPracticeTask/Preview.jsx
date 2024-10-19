@@ -74,26 +74,6 @@ export const Preview = () => {
                             <Card>
                                 <Flex direction={'column'} gap={'2'} p={'4'}>
                                     <Text color='gray' size={'2'}>
-                                        Objective
-                                    </Text>
-                                    <Text>
-                                        Create a visually appealing and responsive user interface
-                                        for a weather application using HTML, CSS, and JavaScript.
-                                        The UI should display real-time weather information for a
-                                        user's specified location, including current conditions,
-                                        hourly and daily forecasts. Implement a location search
-                                        feature to allow users to easily find weather data for any
-                                        desired location. Ensure the UI is user-friendly and
-                                        functions seamlessly across various devices.
-                                    </Text>
-                                </Flex>
-                            </Card>
-                        </Grid>
-
-                        <Grid mt={'4'} columns={{ initial: '1', md: '2' }} gap='4' width='auto'>
-                            <Card>
-                                <Flex direction={'column'} gap={'2'} p={'4'}>
-                                    <Text color='gray' size={'2'}>
                                         Description
                                     </Text>
 
@@ -117,6 +97,25 @@ export const Preview = () => {
                                     </Flex>
                                 </Flex>
                             </Card>
+                            <Card>
+                                <Flex direction={'column'} gap={'2'} p={'4'}>
+                                    <Text color='gray' size={'2'}>
+                                        Objective
+                                    </Text>
+                                    <Text>
+                                        Create a visually appealing and responsive user interface
+                                        for a weather application using HTML, CSS, and JavaScript.
+                                        The UI should display real-time weather information for a
+                                        user's specified location, including current conditions,
+                                        hourly and daily forecasts. Implement a location search
+                                        feature to allow users to easily find weather data for any
+                                        desired location. Ensure the UI is user-friendly and
+                                        functions seamlessly across various devices.
+                                    </Text>
+                                </Flex>
+                            </Card>
+
+                            
                             <Card>
                                 <Flex direction={'column'} gap={'2'} p={'4'}>
                                     <Text color='gray' size={'2'}>

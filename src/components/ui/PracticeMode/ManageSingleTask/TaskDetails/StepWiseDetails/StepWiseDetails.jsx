@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Text,
     Card,
@@ -13,11 +13,32 @@ import {
 } from '@radix-ui/themes';
 import { IconTimeline, IconPencil, IconTrash, IconPlus } from '@tabler/icons-react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useParams } from 'react-router-dom';
+import {
+    useGetPracticeAboutAndStepsQuery,
+    useUpdatePracticeStepsMutation
+} from '../../../../../../redux/api-services/practiceApi';
 
 export const StepWiseDetails = () => {
-    const [steps, setSteps] = useState(stepdata);
+    const [steps, setSteps] = useState([]);
     const [open, setOpen] = useState(false);
     const [currentStep, setCurrentStep] = useState(null);
+
+    const { id } = useParams();
+    const { data } = useGetPracticeAboutAndStepsQuery(id); //isLoading, error
+    const [updatePracticeSteps] = useUpdatePracticeStepsMutation();
+
+    useEffect(() => {
+        if (data && data.steps) {
+            setSteps(
+                data.steps.map((step) => ({
+                    step: step.steps_id,
+                    title: step.step_name,
+                    description: step.step_description.join(', ')
+                }))
+            );
+        }
+    }, [data]);
 
     const handleDragEnd = (result) => {
         if (!result.destination) return;
@@ -47,21 +68,40 @@ export const StepWiseDetails = () => {
         setSteps(steps.filter((s) => s.step !== step.step));
     };
 
+    const handleSaveToServer = async () => {
+        const updatedSteps = steps.map((step) => ({
+            steps_id: step.step,
+            step_name: step.title,
+            step_description: step.description.split(', ') // Convert description to array
+        }));
+
+        try {
+            await updatePracticeSteps({ practice_id: id, steps: updatedSteps });
+            alert('Steps updated successfully');
+        } catch (error) {
+            console.error('Failed to update steps', error);
+        }
+    };
+
     return (
         <div>
             <Flex align='center' justify='between' mt='6'>
                 <Heading>Steps</Heading>
-
-                <Dialog.Root open={open} onOpenChange={setOpen}>
-                    <Dialog.Trigger asChild>
-                        <Button variant='surface' color='gray' onClick={() => openModal()}>
-                            <IconPlus size={16} /> Add New Step
-                        </Button>
-                    </Dialog.Trigger>
-                    <Dialog.Content>
-                        <StepDetailsDialog step={currentStep} onSave={handleSaveStep} />
-                    </Dialog.Content>
-                </Dialog.Root>
+                <Flex gap={'2'}>
+                    <Dialog.Root open={open} onOpenChange={setOpen}>
+                        <Dialog.Trigger asChild>
+                            <Button variant='surface' color='gray' onClick={() => openModal()}>
+                                <IconPlus size={16} /> Add New Step
+                            </Button>
+                        </Dialog.Trigger>
+                        <Dialog.Content>
+                            <StepDetailsDialog step={currentStep} onSave={handleSaveStep} />
+                        </Dialog.Content>
+                    </Dialog.Root>
+                    <Button onClick={handleSaveToServer} color='green'>
+                        Save All Changes
+                    </Button>
+                </Flex>
             </Flex>
 
             <DragDropContext onDragEnd={handleDragEnd}>
@@ -126,27 +166,6 @@ export const StepWiseDetails = () => {
         </div>
     );
 };
-
-const stepdata = [
-    {
-        step: '1',
-        title: 'Design UI',
-        description:
-            'Create a visually appealing and responsive user interface for a weather application using HTML, CSS, and JavaScript. The UI should display real-time weather information for a users specified location, including current conditions, hourly and daily forecasts. Implement a location search feature to allow users to easily find weather data for any desired location. Ensure the UI is user-friendly and functions seamlessly across various devices.'
-    },
-    {
-        step: '2',
-        title: 'Location Search',
-        description:
-            'Create a visually appealing and responsive user interface for a weather application using HTML, CSS, and JavaScript. The UI should display real-time weather information for a users specified location, including current conditions, hourly and daily forecasts. Implement a location search feature to allow users to easily find weather data for any desired location. Ensure the UI is user-friendly and functions seamlessly across various devices.'
-    },
-    {
-        step: '3',
-        title: 'Weather Data',
-        description:
-            'Create a visually appealing and responsive user interface for a weather application using HTML, CSS, and JavaScript. The UI should display real-time weather information for a users specified location, including current conditions, hourly and daily forecasts. Implement a location search feature to allow users to easily find weather data for any desired location. Ensure the UI is user-friendly and functions seamlessly across various devices.'
-    }
-];
 
 export const StepDetailsDialog = ({ step, onSave }) => {
     const [title, setTitle] = useState(step ? step.title : '');
