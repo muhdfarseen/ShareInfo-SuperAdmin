@@ -37,17 +37,23 @@ export const Navbar = () => {
                         <Flex gap='3' align='center'>
                             <Box>
                                 <Text align={'right'} as='div' size='2' weight='bold'>
-                                    {data?.name || ''}
+                                    {data ?
+                                        data?.first_name +
+                                        ' ' +
+                                        data?.middle_name +
+                                        ' ' +
+                                        data?.last_name
+                                    :   ''}
                                 </Text>
                                 <Text align={'right'} as='div' size='1' color='gray'>
-                                    {data?.designation || ''}
+                                    {data ? data?.designation : ''}
                                 </Text>
                             </Box>
 
                             <Avatar
                                 color='orange'
                                 size='3'
-                                fallback={data?.name?.slice(0, 1) || ''}
+                                fallback={data?.first_name?.slice(0, 1) || ''}
                             />
                         </Flex>
                     </DropdownMenu.Trigger>

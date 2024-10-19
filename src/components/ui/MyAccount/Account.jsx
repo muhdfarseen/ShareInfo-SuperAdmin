@@ -28,7 +28,7 @@ export const Account = () => {
 
     useEffect(() => {
         if (data) {
-            setDesignation(data.designation);
+            setDesignation(data.designation || '');
             setFirstName(data.first_name || '');
             setMiddleName(data.middle_name || '');
             setLastName(data.last_name || '');
@@ -108,7 +108,9 @@ export const Account = () => {
             {/* Header Section */}
             <Flex my={'9'} align={'center'} direction={'column'} justify={'center'}>
                 <Flex width={'70%'} align={'center'} justify={'between'}>
-                    <Heading size={'7'}>{data?.name}</Heading>
+                    <Heading size={'7'}>
+                        {data?.first_name + ' ' + data?.middle_name + ' ' + data?.last_name}
+                    </Heading>
                     <Button
                         type='button'
                         onClick={goToPreviousPath}
@@ -139,11 +141,11 @@ export const Account = () => {
                     {/* Name Section */}
                     <Box width='100%'>
                         <Card>
-                            <Flex p={'4'} justify={'between'}>
+                            <Flex gap={'4'} wrap={'wrap'} p={'4'} justify={'between'}>
                                 <Box>
                                     <Heading size={'4'}>Name</Heading>
                                 </Box>
-                                <Box width={'50%'}>
+                                <Box minWidth={'200px'} width={'50%'}>
                                     <Text>Name</Text>
                                     <Flex gap={'2'}>
                                         <TextField.Root
@@ -174,7 +176,11 @@ export const Account = () => {
                                             onChange={(e) => setLastName(e.target.value)}
                                         />
                                     </Flex>
-                                    {firstName || middleName || lastName ?
+                                    {(
+                                        data?.first_name != firstName ||
+                                        data?.middle_name != middleName ||
+                                        data?.last_name != lastName
+                                    ) ?
                                         <Flex
                                             mt={'4'}
                                             align={'end'}
@@ -196,11 +202,11 @@ export const Account = () => {
                     {/* Designation Section */}
                     <Box width='100%'>
                         <Card>
-                            <Flex p={'4'} justify={'between'}>
+                            <Flex gap={'4'} wrap={'wrap'} p={'4'} justify={'between'}>
                                 <Box>
                                     <Heading size={'4'}>Designation</Heading>
                                 </Box>
-                                <Box width={'50%'}>
+                                <Box minWidth={'200px'} width={'50%'}>
                                     <Text>Designation</Text>
                                     <TextField.Root
                                         mt={'2'}
@@ -233,11 +239,11 @@ export const Account = () => {
                     {/* Email Section */}
                     <Box width='100%'>
                         <Card>
-                            <Flex p={'4'} justify={'between'}>
+                            <Flex gap={'4'} wrap={'wrap'} p={'4'} justify={'between'}>
                                 <Box>
                                     <Heading size={'4'}>Email</Heading>
                                 </Box>
-                                <Box width={'50%'}>
+                                <Box minWidth={'200px'} width={'50%'}>
                                     <Text>Email</Text>
                                     <TextField.Root
                                         mt={'2'}
@@ -256,11 +262,11 @@ export const Account = () => {
                     {/* Password Section */}
                     <Box width='100%'>
                         <Card>
-                            <Flex p={'4'} justify={'between'}>
+                            <Flex gap={'4'} wrap={'wrap'} p={'4'} justify={'between'}>
                                 <Box>
                                     <Heading size={'4'}>Password</Heading>
                                 </Box>
-                                <Box width={'50%'}>
+                                <Box minWidth={'200px'} width={'50%'}>
                                     <Text>Old Password</Text>
                                     <TextField.Root
                                         type='password'
