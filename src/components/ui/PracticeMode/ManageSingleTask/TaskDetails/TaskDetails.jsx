@@ -16,7 +16,7 @@ export const TaskDetails = () => {
                         variant='classic'
                         onValueChange={(value) => setValue(value)}
                         defaultValue='1'
-                        columns={{ initial: '1', sm: '3' }}>
+                        columns={{ initial: '3', sm: '3' }}>
                         <RadioCards.Item value='1'>
                             <Flex align={'center'} gap={'2'} width='100%'>
                                 <IconButton size='1' variant='ghost'>

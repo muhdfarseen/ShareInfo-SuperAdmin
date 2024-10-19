@@ -40,13 +40,6 @@ export const practiiceApi = createApi({
                 method: 'POST',
                 body: passwordData
             })
-        }),
-        updatePracticeSteps: builder.mutation({
-            query: ({ practice_id, steps }) => ({
-                url: `${ENDPOINTS.practiceManageStepsUpdate}${practice_id}/`,
-                method: 'PUT',
-                body: steps
-            })
         })
     })
 });
@@ -60,6 +53,5 @@ export const {
     useGetLeaderboardWeaklyQuery,
     useGetPracticeAboutAndStepsQuery,
     useUpdateProfileMutation,
-    useResetPasswordMutation,
-    useUpdatePracticeStepsMutation
+    useResetPasswordMutation
 } = practiiceApi;

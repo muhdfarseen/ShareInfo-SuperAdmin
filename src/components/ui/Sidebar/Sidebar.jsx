@@ -19,9 +19,14 @@ export const Sidebar = () => {
 
     useEffect(() => {
         const currentPath = location.pathname.replace('/dashboard/', '');
+        const currentBasePath = currentPath.split('/')[0];
+
         const activeItem = sidebarData.find((item) =>
-            Array.isArray(item.link) ? item.link.includes(currentPath) : item.link === currentPath
+            Array.isArray(item.link) ?
+                item.link.includes(currentBasePath)
+            :   item.link === currentBasePath
         );
+
         if (activeItem) {
             setActiveIcon(activeItem.name);
         } else {

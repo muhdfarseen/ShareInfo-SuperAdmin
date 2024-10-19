@@ -9,7 +9,7 @@ export const Dashboard = () => {
 
     return (
         <div>
-            <Flex direction={'column'} height={'100vh'}>
+            <Flex direction={'column'} minHeight={'100vh'}>
                 <div style={{ position: 'sticky', top: 0, height: 65, zIndex: 1000 }}>
                     <Navbar />
                 </div>

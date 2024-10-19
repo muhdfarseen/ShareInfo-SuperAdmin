@@ -16,7 +16,6 @@ const ENDPOINTS = {
     leaderboardWeakly: '/practice/leaderboard/weakly/',
 
     managePracticeAboutAndSteps: '/practice/manage/',
-    practiceManageStepsUpdate: '/practice/manage-steps/',
 
     resetPassword: '/reset-password/'
 };

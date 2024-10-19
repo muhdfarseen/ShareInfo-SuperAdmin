@@ -1,18 +1,14 @@
 import { Heading, Flex, Link, Tabs, Separator, Button } from '@radix-ui/themes';
 import { IconChevronRight, IconArrowBackUp } from '@tabler/icons-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { TaskWiseTable } from '../../../../ui/PracticeMode/ManageSingleTask/Leaderboard/TaskWiseTable';
 import { TaskDetails } from '../../../../ui/PracticeMode/ManageSingleTask/TaskDetails/TaskDetails';
 import { Submissions } from '../../../../ui/PracticeMode/ManageSingleTask/Submissions/Submissions';
-import { useGetPracticeAboutAndStepsQuery } from '../../../../../redux/api-services/practiceApi';
 
 export const TaskPage = () => {
     const navigate = useNavigate();
     const [selectedTab, setSelectedTab] = useState('taskdetails');
-
-    const { id } = useParams();
-    const { data } = useGetPracticeAboutAndStepsQuery(id);
 
     const handleNavigation = (path) => {
         navigate(`/dashboard/${path}`);
@@ -67,7 +63,7 @@ export const TaskPage = () => {
 
                 <Flex width={'100%'} direction={'column'}>
                     <Flex width={'100%'} align={'center'} justify={'between'}>
-                        <Heading>{data?.practice_task}</Heading>
+                        <Heading>Manage Task</Heading>
                         <Button
                             type='button'
                             onClick={goToPreviousPath}
