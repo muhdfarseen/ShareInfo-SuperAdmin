@@ -47,7 +47,7 @@ export const practiiceApi = createApi({
                 method: 'PUT',
                 body: steps
             })
-        }),
+        })
     })
 });
 

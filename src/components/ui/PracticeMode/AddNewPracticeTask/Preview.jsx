@@ -115,7 +115,6 @@ export const Preview = () => {
                                 </Flex>
                             </Card>
 
-                            
                             <Card>
                                 <Flex direction={'column'} gap={'2'} p={'4'}>
                                     <Text color='gray' size={'2'}>

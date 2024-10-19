@@ -71,12 +71,15 @@ export const BasicOverView = () => {
                         />
 
                         <Flex gap={'2'} justify={'between'}>
-                            <Flex gap={'2'} direction={'column'} >
+                            <Flex gap={'2'} direction={'column'}>
                                 <Text size={'4'} weight={'bold'}>
                                     {data?.practice_task}
                                 </Text>
                                 <Flex wrap={'wrap'} gap={'2'}>
-                                    <Badge color={data?.category_color} variant='soft' radius='full'>
+                                    <Badge
+                                        color={data?.category_color}
+                                        variant='soft'
+                                        radius='full'>
                                         {data?.category}
                                     </Badge>
                                     {data?.sub_categories?.map((item) => (

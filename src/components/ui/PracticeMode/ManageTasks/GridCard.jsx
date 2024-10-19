@@ -3,10 +3,7 @@ import { Card } from '@radix-ui/themes';
 import shareInfoCoin from '../../../../assets/Images/ShareInfocoin.svg';
 import classes from './GridCard.module.css';
 import { useNavigate } from 'react-router-dom';
-import {
-   
-    useGetPracticeListQuery
-} from '../../../../redux/api-services/practiceApi';
+import { useGetPracticeListQuery } from '../../../../redux/api-services/practiceApi';
 import { IconAlertTriangle, IconCircleNumber0 } from '@tabler/icons-react';
 
 export const GridCard = ({ searchQuery, selectedCategory }) => {
@@ -20,7 +17,6 @@ export const GridCard = ({ searchQuery, selectedCategory }) => {
             item.practice_task.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    
     if (isLoading)
         return (
             <Flex align={'center'} justify={'center'} height={'300px'}>
