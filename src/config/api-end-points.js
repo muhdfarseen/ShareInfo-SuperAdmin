@@ -5,7 +5,6 @@ const ENDPOINTS = {
 
     login: '/login/',
     refresh: '/token/refresh/',
-
     profile: '/profile/manage/',
 
     practiceList: '/practice/list/',
