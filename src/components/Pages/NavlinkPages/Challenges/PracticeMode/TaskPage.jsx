@@ -68,11 +68,7 @@ export const TaskPage = () => {
                 <Flex width={'100%'} direction={'column'}>
                     <Flex width={'100%'} align={'center'} justify={'between'}>
                         <Heading>{data?.practice_task}</Heading>
-                        <Button
-                            onClick={goToPreviousPath}
-                            size={'2'}
-                            variant='soft'
-                            color='gray'>
+                        <Button onClick={goToPreviousPath} size={'2'} variant='soft' color='gray'>
                             <IconArrowBackUp style={{ zIndex: '0' }} size={15} />
                             Go Back
                         </Button>

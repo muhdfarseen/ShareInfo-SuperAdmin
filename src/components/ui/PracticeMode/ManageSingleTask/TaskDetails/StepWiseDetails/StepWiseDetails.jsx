@@ -13,7 +13,13 @@ import {
     Spinner,
     Callout
 } from '@radix-ui/themes';
-import { IconTimeline, IconPencil, IconTrash, IconPlus, IconAlertTriangle } from '@tabler/icons-react';
+import {
+    IconTimeline,
+    IconPencil,
+    IconTrash,
+    IconPlus,
+    IconAlertTriangle
+} from '@tabler/icons-react';
 import { useParams } from 'react-router-dom';
 import { useGetPracticeAboutAndStepsQuery } from '../../../../../../redux/api-services/practiceApi';
 

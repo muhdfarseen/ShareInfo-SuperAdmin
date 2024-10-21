@@ -61,7 +61,7 @@ export const BasicOverView = () => {
                             <Flex gap={'3'} justify={'between'}>
                                 <Flex gap={'3'} direction={'column'}>
                                     <Text size={'5'} weight={'bold'}>
-                                    {data?.practice_task}
+                                        {data?.practice_task}
                                     </Text>
                                     <Flex wrap={'wrap'} gap={'2'}>
                                         <Badge radius='full' size={'3'} color='yellow'>

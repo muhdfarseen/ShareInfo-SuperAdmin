@@ -77,8 +77,8 @@ export const TaskRoadMap = () => {
                                             Delete this Roadmap Process
                                         </AlertDialog.Title>
                                         <AlertDialog.Description size='2'>
-                                            Are you sure you want to delete this process? This action
-                                            cannot be undone.
+                                            Are you sure you want to delete this process? This
+                                            action cannot be undone.
                                         </AlertDialog.Description>
 
                                         <Flex gap='3' mt='4' justify='end'>
