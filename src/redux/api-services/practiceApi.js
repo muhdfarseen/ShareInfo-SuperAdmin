@@ -24,6 +24,9 @@ export const practiiceApi = createApi({
         getLeaderboardWeakly: builder.query({
             query: () => ENDPOINTS.leaderboardWeakly
         }),
+        getLeaderboardPractice: builder.query({
+            query: (practiceId) => `${ENDPOINTS.leaderboardPractice}${practiceId}/`
+        }),
         getPracticeAboutAndSteps: builder.query({
             query: (practiceId) => `${ENDPOINTS.managePracticeAboutAndSteps}${practiceId}/`
         }),
@@ -54,6 +57,7 @@ export const {
     useGetLeaderboardGlobalQuery,
     useGetLeaderboardMonthlyQuery,
     useGetLeaderboardWeaklyQuery,
+    useGetLeaderboardPracticeQuery,
     useGetPracticeAboutAndStepsQuery,
     useGetProcessQuery,
     useUpdateProfileMutation,

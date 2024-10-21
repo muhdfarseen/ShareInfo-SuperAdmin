@@ -13,6 +13,8 @@ const ENDPOINTS = {
     leaderboardGlobal: '/practice/leaderboard/global/',
     leaderboardMonthly: '/practice/leaderboard/monthly/',
     leaderboardWeakly: '/practice/leaderboard/weakly/',
+    leaderboardPractice: '/practice/leaderboard/practice/',
+
 
     managePracticeAboutAndSteps: '/practice/manage/',
 
