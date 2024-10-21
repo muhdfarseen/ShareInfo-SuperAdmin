@@ -27,6 +27,9 @@ export const practiiceApi = createApi({
         getPracticeAboutAndSteps: builder.query({
             query: (practiceId) => `${ENDPOINTS.managePracticeAboutAndSteps}${practiceId}/`
         }),
+        getProcess: builder.query({
+            query: (practiceId) => `${ENDPOINTS.manageProcess}${practiceId}/`
+        }),
         updateProfile: builder.mutation({
             query: (profileData) => ({
                 url: ENDPOINTS.profile,
@@ -52,6 +55,7 @@ export const {
     useGetLeaderboardMonthlyQuery,
     useGetLeaderboardWeaklyQuery,
     useGetPracticeAboutAndStepsQuery,
+    useGetProcessQuery,
     useUpdateProfileMutation,
     useResetPasswordMutation
 } = practiiceApi;

@@ -16,6 +16,8 @@ const ENDPOINTS = {
 
     managePracticeAboutAndSteps: '/practice/manage/',
 
+    manageProcess : '/practice/manage-process/',
+    
     resetPassword: '/reset-password/'
 };
 

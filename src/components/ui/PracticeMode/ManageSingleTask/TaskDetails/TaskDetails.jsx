@@ -19,7 +19,7 @@ export const TaskDetails = () => {
                         columns={{ initial: '3', sm: '3' }}>
                         <RadioCards.Item value='1'>
                             <Flex align={'center'} gap={'2'} width='100%'>
-                                <IconButton size='1' variant='ghost'>
+                                <IconButton asChild size='1' variant='ghost'>
                                     <IconTextCaption />
                                 </IconButton>
                                 <Text size={'3'} weight='bold'>
@@ -29,7 +29,7 @@ export const TaskDetails = () => {
                         </RadioCards.Item>
                         <RadioCards.Item value='2'>
                             <Flex align={'center'} gap={'2'} width='100%'>
-                                <IconButton size='1' variant='ghost'>
+                                <IconButton asChild size='1' variant='ghost'>
                                     <IconStairs />
                                 </IconButton>
                                 <Text size={'3'} weight='bold'>
@@ -39,7 +39,7 @@ export const TaskDetails = () => {
                         </RadioCards.Item>
                         <RadioCards.Item value='3'>
                             <Flex align={'center'} gap={'2'} width='100%'>
-                                <IconButton size='1' variant='ghost'>
+                                <IconButton asChild size='1' variant='ghost'>
                                     <IconRoute />
                                 </IconButton>
                                 <Text size={'3'} weight='bold'>
