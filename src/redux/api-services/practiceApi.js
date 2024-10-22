@@ -46,6 +46,29 @@ export const practiiceApi = createApi({
                 method: 'POST',
                 body: passwordData
             })
+        }),
+
+        addStep: builder.mutation({
+            query: ({ practiceId, stepData }) => ({
+                url: `/practice/steps/${practiceId}/`,
+                method: 'POST',
+                body: stepData
+            })
+        }),
+
+        updateStep: builder.mutation({
+            query: ({ stepsId, stepData }) => ({
+                url: `/practice/step/manage/${stepsId}/`,
+                method: 'PUT',
+                body: stepData
+            })
+        }),
+
+        deleteStep: builder.mutation({
+            query: (stepsId) => ({
+                url: `/practice/step/manage/${stepsId}/`,
+                method: 'DELETE'
+            })
         })
     })
 });
@@ -61,5 +84,8 @@ export const {
     useGetPracticeAboutAndStepsQuery,
     useGetProcessQuery,
     useUpdateProfileMutation,
-    useResetPasswordMutation
+    useResetPasswordMutation,
+    useAddStepMutation,
+    useUpdateStepMutation,
+    useDeleteStepMutation
 } = practiiceApi;
