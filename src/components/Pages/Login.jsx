@@ -86,7 +86,7 @@ export const Login = () => {
                                         </TextField.Slot>
                                     </TextField.Root>
                                     <Button
-                                        disabled={isLoading}
+                                        loading={isLoading}
                                         type='submit'
                                         size={'3'}
                                         color='orange'>
