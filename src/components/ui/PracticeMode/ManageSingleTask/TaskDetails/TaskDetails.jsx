@@ -20,7 +20,7 @@ export const TaskDetails = () => {
                         <RadioCards.Item value='1'>
                             <Flex align={'center'} gap={'2'} width='100%'>
                                 <IconButton asChild size='1' variant='ghost'>
-                                    <IconTextCaption />
+                                    <IconTextCaption size={18} />
                                 </IconButton>
                                 <Text size={'3'} weight='bold'>
                                     About
@@ -30,7 +30,7 @@ export const TaskDetails = () => {
                         <RadioCards.Item value='2'>
                             <Flex align={'center'} gap={'2'} width='100%'>
                                 <IconButton asChild size='1' variant='ghost'>
-                                    <IconStairs />
+                                    <IconStairs size={18} />
                                 </IconButton>
                                 <Text size={'3'} weight='bold'>
                                     Steps
@@ -40,7 +40,7 @@ export const TaskDetails = () => {
                         <RadioCards.Item value='3'>
                             <Flex align={'center'} gap={'2'} width='100%'>
                                 <IconButton asChild size='1' variant='ghost'>
-                                    <IconRoute />
+                                    <IconRoute size={18} />
                                 </IconButton>
                                 <Text size={'3'} weight='bold'>
                                     Roadmap
