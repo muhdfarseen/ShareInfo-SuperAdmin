@@ -5,14 +5,14 @@ import { useState } from 'react';
 import { TaskWiseTable } from '../../../../ui/PracticeMode/ManageSingleTask/Leaderboard/TaskWiseTable';
 import { TaskDetails } from '../../../../ui/PracticeMode/ManageSingleTask/TaskDetails/TaskDetails';
 import { Submissions } from '../../../../ui/PracticeMode/ManageSingleTask/Submissions/Submissions';
-import { useGetPracticeAboutQuery } from '../../../../../redux/api-services/practiceApi';
+import { useGetPracticeQuery } from '../../../../../redux/api-services/practiceApi';
 
 export const TaskPage = () => {
     const navigate = useNavigate();
     const [selectedTab, setSelectedTab] = useState('taskdetails');
 
     const { id } = useParams();
-    const { data } = useGetPracticeAboutQuery(id);
+    const { data } = useGetPracticeQuery(id);
 
     const handleNavigation = (path) => {
         navigate(`/dashboard/${path}`);
