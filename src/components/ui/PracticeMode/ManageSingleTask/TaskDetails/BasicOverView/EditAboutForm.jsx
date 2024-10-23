@@ -1,11 +1,20 @@
-import { TextField, Text, Flex, TextArea, Dialog, Button } from '@radix-ui/themes';
+import { TextField, Text, Flex, Select, TextArea, Dialog, Button } from '@radix-ui/themes';
 import { useState, useRef } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
+import { useParams } from 'react-router-dom';
+import {
+    useGetCategoryListQuery,
+    useGetPracticeQuery
+} from '../../../../../../redux/api-services/practiceApi';
 
 export const EditAboutForm = () => {
     const [value, setValue] = useState(null);
     const [showPicker, setShowPicker] = useState(false);
+
+    const { id } = useParams();
+    const { data } = useGetPracticeQuery(id);
+    const { data: categories } = useGetCategoryListQuery();
 
     const handleDateChange = (selectedDate) => {
         setValue(selectedDate);
@@ -31,34 +40,65 @@ export const EditAboutForm = () => {
             <Flex width={'100%'} direction={'column'} gap={'6'}>
                 <Flex direction={'column'} gap={'1'}>
                     <Text size={'2'}>Task Title</Text>
-                    <TextField.Root size={'3'} placeholder='' />
+                    <TextField.Root value={data?.practice_task} size={'3'} placeholder='' />
                 </Flex>
 
                 <Flex gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Category</Text>
-                        <TextField.Root size={'3'} placeholder='' />
+                        <Select.Root defaultValue={data.category} size='3'>
+                            <Select.Trigger placeholder='Category'></Select.Trigger>
+                            <Select.Content>
+                                <Select.Group>
+                                    <Select.Label>Category</Select.Label>
+                                    {categories.map((item) => (
+                                        <Select.Item key={item.id} value={item.category}>
+                                            {item.category}
+                                        </Select.Item>
+                                    ))}
+                                </Select.Group>
+                            </Select.Content>
+                        </Select.Root>
                     </Flex>
                     <Flex flexGrow={'2'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Sub Category (comma-separated)</Text>
-                        <TextField.Root size={'3'} placeholder='' />
+                        <TextField.Root
+                            value={data?.sub_categories?.join(', ')}
+                            size={'3'}
+                            placeholder=''
+                        />
                     </Flex>
                 </Flex>
 
                 <Flex direction={'column'} gap={'1'}>
                     <Text size={'2'}>Task Description</Text>
-                    <TextArea resize='vertical' size={'3'} placeholder='' />
+                    <TextArea
+                        value={data?.description}
+                        resize='vertical'
+                        size={'3'}
+                        placeholder=''
+                    />
                 </Flex>
 
                 <Flex width={'100%'} gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Task Objective</Text>
-                        <TextArea resize='vertical' size={'3'} placeholder='' />
+                        <TextArea
+                            value={data?.objective}
+                            resize='vertical'
+                            size={'3'}
+                            placeholder=''
+                        />
                     </Flex>
 
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Assessment Overview</Text>
-                        <TextArea resize='vertical' size={'3'} placeholder='' />
+                        <TextArea
+                            value={data?.overview}
+                            resize='vertical'
+                            size={'3'}
+                            placeholder=''
+                        />
                     </Flex>
                 </Flex>
 
@@ -87,6 +127,7 @@ export const EditAboutForm = () => {
                                 color='indigo'
                                 size={'3'}
                                 placeholder='Pick date'
+                                defaultValue={data?.deadline}
                                 value={value && value.toLocaleDateString()}
                                 onClick={() => setShowPicker(true)}
                             />
@@ -102,9 +143,11 @@ export const EditAboutForm = () => {
                 </Flex>
 
                 <Flex justify={'end'} gap={'3'}>
-                    <Button radius='large' size={'3'}>
-                        Save
-                    </Button>
+                    <Dialog.Close>
+                        <Button radius='large' size={'3'}>
+                            Save
+                        </Button>
+                    </Dialog.Close>
                 </Flex>
             </Flex>
         </div>
