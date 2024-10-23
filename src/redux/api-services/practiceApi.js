@@ -49,12 +49,12 @@ export const practiiceApi = createApi({
         }),
 
         getSteps: builder.query({
-            query: (practiceId) => `/practice/steps/${practiceId}/`
+            query: (practiceId) => `${ENDPOINTS.practiceSteps}${practiceId}/`
         }),
 
         addStep: builder.mutation({
             query: ({ practiceId, stepData }) => ({
-                url: `/practice/steps/${practiceId}/`,
+                url: `${ENDPOINTS.practiceSteps}${practiceId}/`,
                 method: 'POST',
                 body: stepData
             })
@@ -62,7 +62,7 @@ export const practiiceApi = createApi({
 
         updateStep: builder.mutation({
             query: ({ stepsId, stepData }) => ({
-                url: `/practice/step/manage/${stepsId}/`,
+                url: `${ENDPOINTS.practiceStepManage}${stepsId}/`,
                 method: 'PUT',
                 body: stepData
             })
@@ -70,7 +70,7 @@ export const practiiceApi = createApi({
 
         deleteStep: builder.mutation({
             query: (stepsId) => ({
-                url: `/practice/step/manage/${stepsId}/`,
+                url: `${ENDPOINTS.practiceStepManage}${stepsId}/`,
                 method: 'DELETE'
             })
         })

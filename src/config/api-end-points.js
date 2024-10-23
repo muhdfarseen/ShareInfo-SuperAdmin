@@ -15,6 +15,10 @@ const ENDPOINTS = {
     leaderboardWeakly: '/practice/leaderboard/weakly/',
     leaderboardPractice: '/practice/leaderboard/practice/',
 
+    practiceSteps : '/practice/steps/',
+    practiceStepManage : '/practice/step/manage/',
+
+
     managePracticeAbout: '/practice/manage/',
 
     manageProcess: '/practice/manage-process/',
