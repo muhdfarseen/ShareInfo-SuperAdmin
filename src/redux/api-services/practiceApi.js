@@ -27,8 +27,8 @@ export const practiiceApi = createApi({
         getLeaderboardPractice: builder.query({
             query: (practiceId) => `${ENDPOINTS.leaderboardPractice}${practiceId}/`
         }),
-        getPracticeAboutAndSteps: builder.query({
-            query: (practiceId) => `${ENDPOINTS.managePracticeAboutAndSteps}${practiceId}/`
+        getPracticeAbout: builder.query({
+            query: (practiceId) => `${ENDPOINTS.managePracticeAbout}${practiceId}/`
         }),
         getProcess: builder.query({
             query: (practiceId) => `${ENDPOINTS.manageProcess}${practiceId}/`
@@ -46,6 +46,10 @@ export const practiiceApi = createApi({
                 method: 'POST',
                 body: passwordData
             })
+        }),
+
+        getSteps: builder.query({
+            query: (practiceId) => `/practice/steps/${practiceId}/`
         }),
 
         addStep: builder.mutation({
@@ -81,10 +85,11 @@ export const {
     useGetLeaderboardMonthlyQuery,
     useGetLeaderboardWeaklyQuery,
     useGetLeaderboardPracticeQuery,
-    useGetPracticeAboutAndStepsQuery,
+    useGetPracticeAboutQuery,
     useGetProcessQuery,
     useUpdateProfileMutation,
     useResetPasswordMutation,
+    useGetStepsQuery,
     useAddStepMutation,
     useUpdateStepMutation,
     useDeleteStepMutation

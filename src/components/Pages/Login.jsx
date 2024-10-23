@@ -56,7 +56,6 @@ export const Login = () => {
                                     height={40}
                                     alt='logo'
                                 />
-
                                 <Badge color='orange'>Super Admin Portal</Badge>
                             </Flex>
 

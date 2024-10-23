@@ -16,12 +16,12 @@ import {
 import shareInfoCoin from '../../../../../../assets/Images/ShareInfocoin.svg';
 import { IconAlertTriangle, IconDotsVertical, IconPencil, IconTrash } from '@tabler/icons-react';
 import { EditAboutForm } from './EditAboutForm';
-import { useGetPracticeAboutAndStepsQuery } from '../../../../../../redux/api-services/practiceApi';
+import { useGetPracticeAboutQuery } from '../../../../../../redux/api-services/practiceApi';
 import { useParams } from 'react-router-dom';
 
 export const BasicOverView = () => {
     const { id } = useParams();
-    const { data, isLoading, error } = useGetPracticeAboutAndStepsQuery(id);
+    const { data, isLoading, error } = useGetPracticeAboutQuery(id);
 
     if (isLoading)
         return (

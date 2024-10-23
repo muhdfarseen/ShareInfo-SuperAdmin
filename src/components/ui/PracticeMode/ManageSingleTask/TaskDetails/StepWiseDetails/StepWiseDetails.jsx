@@ -27,13 +27,13 @@ import { useParams } from 'react-router-dom';
 import {
     useAddStepMutation,
     useDeleteStepMutation,
-    useGetPracticeAboutAndStepsQuery,
+    useGetStepsQuery,
     useUpdateStepMutation
 } from '../../../../../../redux/api-services/practiceApi';
 
 export const StepWiseDetails = () => {
     const { id } = useParams();
-    const { data, isLoading, error, refetch } = useGetPracticeAboutAndStepsQuery(id);
+    const { data, isLoading, error, refetch } = useGetStepsQuery(id);
 
     const [addStep] = useAddStepMutation();
     const [updateStep] = useUpdateStepMutation();
@@ -100,7 +100,7 @@ export const StepWiseDetails = () => {
                 </Flex>
             : data ?
                 <Grid mt={'4'} columns={{ initial: '1', md: '2' }} gap={'5'} width='auto'>
-                    {data?.steps?.map((item, index) => (
+                    {data?.map((item, index) => (
                         <Card key={item.step_name}>
                             <Flex key={item.steps_id} p='4' direction='column' gap='4'>
                                 <Flex justify={'between'}>
