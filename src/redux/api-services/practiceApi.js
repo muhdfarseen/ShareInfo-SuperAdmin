@@ -27,7 +27,7 @@ export const practiiceApi = createApi({
         getLeaderboardPractice: builder.query({
             query: (practiceId) => `${ENDPOINTS.leaderboardPractice}${practiceId}/`
         }),
-        
+
         getProcess: builder.query({
             query: (practiceId) => `${ENDPOINTS.manageProcess}${practiceId}/`
         }),
@@ -88,12 +88,11 @@ export const practiiceApi = createApi({
 });
 
 export const {
-
     //profile Section
     useGetProfileQuery,
     useUpdateProfileMutation,
     useResetPasswordMutation,
-    
+
     //Category
     useGetCategoryListQuery,
 
@@ -116,5 +115,4 @@ export const {
     useAddStepMutation,
     useUpdateStepMutation,
     useDeleteStepMutation
-
 } = practiiceApi;
