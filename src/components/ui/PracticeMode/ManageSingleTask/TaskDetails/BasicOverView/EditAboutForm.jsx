@@ -29,7 +29,7 @@ export const EditAboutForm = () => {
             description: data?.description || '',
             objective: data?.objective || '',
             overview: data?.overview || '',
-            banner_image: '', 
+            banner_image: '',
             deadline: data?.deadline || ''
         }
     });
@@ -65,12 +65,11 @@ export const EditAboutForm = () => {
         const updatedData = {
             ...formData,
             sub_categories: formData.sub_categories.split(',').map((item) => item.trim()),
-            deadline: selectedDate.toISOString().split('T')[0] 
+            deadline: selectedDate.toISOString().split('T')[0]
         };
         console.log(updatedData);
 
         updatePractice({ practiceId: id, data: updatedData })
-            
             .then((response) => {
                 console.log('Update successful', response);
             })
@@ -99,7 +98,7 @@ export const EditAboutForm = () => {
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Category</Text>
                         <Select.Root
-                        defaultValue={data?.category}
+                            defaultValue={data?.category}
                             {...register('category', { required: 'Category is required' })}
                             size='3'>
                             <Select.Trigger placeholder='Category'></Select.Trigger>
@@ -125,7 +124,7 @@ export const EditAboutForm = () => {
                 <Flex direction={'column'} gap={'1'}>
                     <Text size={'2'}>Task Description</Text>
                     <TextArea
-                    size={'3'}
+                        size={'3'}
                         {...register('description', {
                             required: 'Description is required',
                             maxLength: 1000
@@ -140,7 +139,7 @@ export const EditAboutForm = () => {
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Task Objective</Text>
                         <TextArea
-                        size={'3'}
+                            size={'3'}
                             {...register('objective', { maxLength: 1000 })}
                             resize='vertical'
                             placeholder=''
@@ -150,7 +149,7 @@ export const EditAboutForm = () => {
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Assessment Overview</Text>
                         <TextArea
-                        size={'3'}
+                            size={'3'}
                             {...register('overview', { maxLength: 1000 })}
                             resize='vertical'
                             placeholder=''
