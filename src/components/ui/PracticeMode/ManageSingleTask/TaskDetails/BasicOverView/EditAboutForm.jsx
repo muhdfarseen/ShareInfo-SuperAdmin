@@ -1,3 +1,4 @@
+import { useForm } from 'react-hook-form';
 import { TextField, Text, Flex, Select, TextArea, Dialog, Button } from '@radix-ui/themes';
 import { useState, useRef } from 'react';
 import { DayPicker } from 'react-day-picker';
@@ -5,22 +6,43 @@ import 'react-day-picker/style.css';
 import { useParams } from 'react-router-dom';
 import {
     useGetCategoryListQuery,
-    useGetPracticeQuery
+    useGetPracticeQuery,
+    useUpdatePracticeMutation
 } from '../../../../../../redux/api-services/practiceApi';
 
 export const EditAboutForm = () => {
-    const [value, setValue] = useState(null);
-    const [showPicker, setShowPicker] = useState(false);
-
     const { id } = useParams();
     const { data } = useGetPracticeQuery(id);
     const { data: categories } = useGetCategoryListQuery();
+    const [updatePractice] = useUpdatePracticeMutation();
 
-    const handleDateChange = (selectedDate) => {
-        setValue(selectedDate);
-        setShowPicker(false);
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+    } = useForm({
+        defaultValues: {
+            practice_task: data?.practice_task || '',
+            category: data?.category || '',
+            sub_categories: data?.sub_categories?.join(', ') || '',
+            description: data?.description || '',
+            objective: data?.objective || '',
+            overview: data?.overview || '',
+            banner_image: '', 
+            deadline: data?.deadline || ''
+        }
+    });
+
+    const [selectedDate, setSelectedDate] = useState(
+        data?.deadline ? new Date(data.deadline) : null
+    );
+    const handleDateChange = (date) => {
+        if (date) {
+            setSelectedDate(date);
+            setValue('deadline', date.toISOString().split('T')[0]);
+        }
     };
-
     const [fileName, setFileName] = useState('');
     const fileInputRef = useRef(null);
 
@@ -28,6 +50,7 @@ export const EditAboutForm = () => {
         const file = e.target.files[0];
         if (file) {
             setFileName(file.name);
+            setValue('banner_image', file);
         }
     };
 
@@ -35,58 +58,91 @@ export const EditAboutForm = () => {
         fileInputRef.current.click();
     };
 
+    // Define showPicker state
+    const [showPicker, setShowPicker] = useState(false);
+
+    const onSubmit = (formData) => {
+        const updatedData = {
+            ...formData,
+            sub_categories: formData.sub_categories.split(',').map((item) => item.trim()),
+            deadline: selectedDate.toISOString().split('T')[0] 
+        };
+        console.log(updatedData);
+
+        updatePractice({ practiceId: id, data: updatedData })
+            
+            .then((response) => {
+                console.log('Update successful', response);
+            })
+            .catch((error) => {
+                console.log('Update failed', error);
+            });
+    };
+
     return (
-        <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <Flex width={'100%'} direction={'column'} gap={'6'}>
                 <Flex direction={'column'} gap={'1'}>
                     <Text size={'2'}>Task Title</Text>
-                    <TextField.Root value={data?.practice_task} size={'3'} placeholder='' />
+                    <TextField.Root
+                        size={'3'}
+                        placeholder=''
+                        {...register('practice_task', {
+                            required: 'Task title is required',
+                            maxLength: 500
+                        })}
+                    />
+                    {errors.practice_task && <span>{errors.practice_task.message}</span>}
                 </Flex>
 
                 <Flex gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Category</Text>
-                        <Select.Root defaultValue={data.category} size='3'>
+                        <Select.Root
+                        defaultValue={data?.category}
+                            {...register('category', { required: 'Category is required' })}
+                            size='3'>
                             <Select.Trigger placeholder='Category'></Select.Trigger>
                             <Select.Content>
                                 <Select.Group>
                                     <Select.Label>Category</Select.Label>
-                                    {categories.map((item) => (
-                                        <Select.Item key={item.id} value={item.category}>
-                                            {item.category}
-                                        </Select.Item>
-                                    ))}
+                                    {categories?.length > 0 &&
+                                        categories.map((item) => (
+                                            <Select.Item key={item.id} value={item.category}>
+                                                {item.category}
+                                            </Select.Item>
+                                        ))}
                                 </Select.Group>
                             </Select.Content>
                         </Select.Root>
                     </Flex>
                     <Flex flexGrow={'2'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Sub Category (comma-separated)</Text>
-                        <TextField.Root
-                            value={data?.sub_categories?.join(', ')}
-                            size={'3'}
-                            placeholder=''
-                        />
+                        <TextField.Root {...register('sub_categories')} size={'3'} placeholder='' />
                     </Flex>
                 </Flex>
 
                 <Flex direction={'column'} gap={'1'}>
                     <Text size={'2'}>Task Description</Text>
                     <TextArea
-                        value={data?.description}
+                    size={'3'}
+                        {...register('description', {
+                            required: 'Description is required',
+                            maxLength: 1000
+                        })}
                         resize='vertical'
-                        size={'3'}
                         placeholder=''
                     />
+                    {errors.description && <span>{errors.description.message}</span>}
                 </Flex>
 
                 <Flex width={'100%'} gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Task Objective</Text>
                         <TextArea
-                            value={data?.objective}
+                        size={'3'}
+                            {...register('objective', { maxLength: 1000 })}
                             resize='vertical'
-                            size={'3'}
                             placeholder=''
                         />
                     </Flex>
@@ -94,9 +150,9 @@ export const EditAboutForm = () => {
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Assessment Overview</Text>
                         <TextArea
-                            value={data?.overview}
+                        size={'3'}
+                            {...register('overview', { maxLength: 1000 })}
                             resize='vertical'
-                            size={'3'}
                             placeholder=''
                         />
                     </Flex>
@@ -104,7 +160,7 @@ export const EditAboutForm = () => {
 
                 <Flex width={'100%'} gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
-                        <Text size={'2'}>Upload banner Image</Text>
+                        <Text size={'2'}>Upload Banner Image</Text>
                         <TextField.Root
                             size={'3'}
                             placeholder='Click to upload an image'
@@ -127,14 +183,13 @@ export const EditAboutForm = () => {
                                 color='indigo'
                                 size={'3'}
                                 placeholder='Pick date'
-                                defaultValue={data?.deadline}
-                                value={value && value.toLocaleDateString()}
+                                value={selectedDate ? selectedDate.toLocaleDateString() : ''}
                                 onClick={() => setShowPicker(true)}
                             />
                             <Dialog.Content maxWidth={'fit-content'}>
                                 <DayPicker
                                     mode='single'
-                                    selected={value}
+                                    selected={selectedDate}
                                     onSelect={handleDateChange}
                                 />
                             </Dialog.Content>
@@ -143,13 +198,11 @@ export const EditAboutForm = () => {
                 </Flex>
 
                 <Flex justify={'end'} gap={'3'}>
-                    <Dialog.Close>
-                        <Button radius='large' size={'3'}>
-                            Save
-                        </Button>
-                    </Dialog.Close>
+                    <Button radius='large' size={'3'} type='submit'>
+                        Save
+                    </Button>
                 </Flex>
             </Flex>
-        </div>
+        </form>
     );
 };

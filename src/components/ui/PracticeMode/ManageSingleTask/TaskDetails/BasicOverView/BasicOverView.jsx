@@ -11,7 +11,8 @@ import {
     IconButton,
     DropdownMenu,
     AlertDialog,
-    Card
+    Card,
+    AspectRatio
 } from '@radix-ui/themes';
 import shareInfoCoin from '../../../../../../assets/Images/ShareInfocoin.svg';
 import { IconAlertTriangle, IconDotsVertical, IconPencil, IconTrash } from '@tabler/icons-react';
@@ -47,16 +48,19 @@ export const BasicOverView = () => {
                 <Box>
                     <Card>
                         <Flex p={'3'} direction={'column'} gap={'3'}>
-                            <img
-                                style={{
-                                    objectFit: 'cover',
-                                    height: '200px',
-                                    width: 'auto',
-                                    borderRadius: '7px'
-                                }}
-                                src='https://plus.unsplash.com/premium_photo-1683133927528-8075b14131a0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                                alt=''
-                            />
+                            {data.banner_image != '' && (
+                                <AspectRatio ratio={16 / 9}>
+                                    <img
+                                        style={{
+                                            borderRadius: '5px',
+                                            objectFit: 'cover',
+                                            width: '100%',
+                                            height: '100%'
+                                        }}
+                                        src={data?.banner_image}
+                                    />
+                                </AspectRatio>
+                            )}
 
                             <Flex gap={'3'} justify={'between'}>
                                 <Flex gap={'3'} direction={'column'}>
