@@ -103,7 +103,7 @@ export const BasicOverView = () => {
                                     </Flex>
                                 </Flex>
 
-                                <Dialog.Root open={isModalOpen} >
+                                <Dialog.Root open={isModalOpen}>
                                     <AlertDialog.Root>
                                         <DropdownMenu.Root>
                                             <DropdownMenu.Trigger>

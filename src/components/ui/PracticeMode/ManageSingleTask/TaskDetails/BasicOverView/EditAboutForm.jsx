@@ -56,30 +56,29 @@ export const EditAboutForm = ({ toggleDialog }) => {
 
     const onSubmit = async (formData) => {
         const selectedCategory = categories?.find((item) => item.category === formData.category);
-    
+
         const updatedData = {
             ...formData,
             category: selectedCategory?.id || null,
             sub_categories: formData.sub_categories.split(',').map((item) => item.trim()),
             deadline: selectedDate?.toISOString().split('T')[0] || null
         };
-    
+
         console.log('Updated Data:', updatedData);
-    
+
         try {
             setLoading(true);
             await updatePractice({ practiceId: id, practiceData: updatedData });
             refetch();
             toggleDialog();
-            toast.success("Updated Successfully !")
+            toast.success('Updated Successfully !');
         } catch (error) {
-            console.log('Update failed', error)                 
-            toast.error("Update failed")
+            console.log('Update failed', error);
+            toast.error('Update failed');
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
-    
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -140,7 +139,6 @@ export const EditAboutForm = ({ toggleDialog }) => {
                     {errors.description && <span>{errors.description.message}</span>}
                 </Flex>
 
-
                 <Flex width={'100%'} gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Task Objective</Text>
@@ -167,7 +165,6 @@ export const EditAboutForm = ({ toggleDialog }) => {
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Banner Image URL</Text>
                         <TextField.Root
-                           
                             size={'3'}
                             placeholder='Enter image URL'
                             {...register('banner_image')}
