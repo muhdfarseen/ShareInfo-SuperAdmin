@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { TextField, Text, Flex, Select, TextArea, Dialog, Button } from '@radix-ui/themes';
-import { useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/style.css';
 import { useParams } from 'react-router-dom';
@@ -9,30 +9,37 @@ import {
     useGetPracticeQuery,
     useUpdatePracticeMutation
 } from '../../../../../../redux/api-services/practiceApi';
+import { toast } from 'sonner';
 
-export const EditAboutForm = () => {
+export const EditAboutForm = ({ toggleDialog }) => {
     const { id } = useParams();
     const { data } = useGetPracticeQuery(id);
     const { data: categories } = useGetCategoryListQuery();
     const [updatePractice] = useUpdatePracticeMutation();
+    const { refetch } = useGetPracticeQuery(id);
+
+    const [loading, setLoading] = useState(false);
 
     const {
         register,
         handleSubmit,
         setValue,
+        watch,
         formState: { errors }
-    } = useForm({
-        defaultValues: {
-            practice_task: data?.practice_task || '',
-            category: data?.category || '',
-            sub_categories: data?.sub_categories?.join(', ') || '',
-            description: data?.description || '',
-            objective: data?.objective || '',
-            overview: data?.overview || '',
-            banner_image: '',
-            deadline: data?.deadline || ''
+    } = useForm();
+
+    useEffect(() => {
+        if (data) {
+            setValue('practice_task', data.practice_task);
+            setValue('category', data.category);
+            setValue('sub_categories', data.sub_categories?.join(', '));
+            setValue('description', data.description);
+            setValue('objective', data.objective);
+            setValue('overview', data.overview);
+            setValue('banner_image', data.banner_image);
+            setSelectedDate(data.deadline ? new Date(data.deadline) : null);
         }
-    });
+    }, [data, setValue]);
 
     const [selectedDate, setSelectedDate] = useState(
         data?.deadline ? new Date(data.deadline) : null
@@ -43,40 +50,36 @@ export const EditAboutForm = () => {
             setValue('deadline', date.toISOString().split('T')[0]);
         }
     };
-    const [fileName, setFileName] = useState('');
-    const fileInputRef = useRef(null);
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFileName(file.name);
-            setValue('banner_image', file);
-        }
-    };
-
-    const handleUploadClick = () => {
-        fileInputRef.current.click();
-    };
 
     // Define showPicker state
     const [showPicker, setShowPicker] = useState(false);
 
-    const onSubmit = (formData) => {
+    const onSubmit = async (formData) => {
+        const selectedCategory = categories?.find((item) => item.category === formData.category);
+    
         const updatedData = {
             ...formData,
+            category: selectedCategory?.id || null,
             sub_categories: formData.sub_categories.split(',').map((item) => item.trim()),
-            deadline: selectedDate.toISOString().split('T')[0]
+            deadline: selectedDate?.toISOString().split('T')[0] || null
         };
-        console.log(updatedData);
-
-        updatePractice({ practiceId: id, data: updatedData })
-            .then((response) => {
-                console.log('Update successful', response);
-            })
-            .catch((error) => {
-                console.log('Update failed', error);
-            });
+    
+        console.log('Updated Data:', updatedData);
+    
+        try {
+            setLoading(true);
+            await updatePractice({ practiceId: id, practiceData: updatedData });
+            refetch();
+            toggleDialog();
+            toast.success("Updated Successfully !")
+        } catch (error) {
+            console.log('Update failed', error)                 
+            toast.error("Update failed")
+        } finally {
+            setLoading(false); 
+        }
     };
+    
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,10 +101,10 @@ export const EditAboutForm = () => {
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Category</Text>
                         <Select.Root
-                            defaultValue={data?.category}
-                            {...register('category', { required: 'Category is required' })}
+                            value={watch('category') || ''} // Get current form value
+                            onValueChange={(value) => setValue('category', value)} // Update category value
                             size='3'>
-                            <Select.Trigger placeholder='Category'></Select.Trigger>
+                            <Select.Trigger placeholder='Select Category' />
                             <Select.Content>
                                 <Select.Group>
                                     <Select.Label>Category</Select.Label>
@@ -114,7 +117,9 @@ export const EditAboutForm = () => {
                                 </Select.Group>
                             </Select.Content>
                         </Select.Root>
+                        {errors.category && <span>{errors.category.message}</span>}
                     </Flex>
+
                     <Flex flexGrow={'2'} direction={'column'} gap={'1'}>
                         <Text size={'2'}>Sub Category (comma-separated)</Text>
                         <TextField.Root {...register('sub_categories')} size={'3'} placeholder='' />
@@ -134,6 +139,7 @@ export const EditAboutForm = () => {
                     />
                     {errors.description && <span>{errors.description.message}</span>}
                 </Flex>
+
 
                 <Flex width={'100%'} gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
@@ -159,20 +165,12 @@ export const EditAboutForm = () => {
 
                 <Flex width={'100%'} gap={'3'}>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
-                        <Text size={'2'}>Upload Banner Image</Text>
+                        <Text size={'2'}>Banner Image URL</Text>
                         <TextField.Root
+                           
                             size={'3'}
-                            placeholder='Click to upload an image'
-                            value={fileName}
-                            onClick={handleUploadClick}
-                            className='readonlytextinput'
-                            style={{ cursor: 'pointer' }}
-                        />
-                        <input
-                            type='file'
-                            ref={fileInputRef}
-                            style={{ display: 'none' }}
-                            onChange={handleFileChange}
+                            placeholder='Enter image URL'
+                            {...register('banner_image')}
                         />
                     </Flex>
                     <Flex flexGrow={'1'} direction={'column'} gap={'1'}>
@@ -197,8 +195,16 @@ export const EditAboutForm = () => {
                 </Flex>
 
                 <Flex justify={'end'} gap={'3'}>
-                    <Button radius='large' size={'3'} type='submit'>
-                        Save
+                    <Button
+                        radius='large'
+                        size={'3'}
+                        color='gray'
+                        variant='soft'
+                        onClick={toggleDialog}>
+                        Cancel
+                    </Button>
+                    <Button loading={loading} radius='large' size={'3'} type='submit'>
+                        Update
                     </Button>
                 </Flex>
             </Flex>

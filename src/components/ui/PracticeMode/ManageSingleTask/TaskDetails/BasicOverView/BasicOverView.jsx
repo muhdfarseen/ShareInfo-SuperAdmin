@@ -19,10 +19,14 @@ import { IconAlertTriangle, IconDotsVertical, IconPencil, IconTrash } from '@tab
 import { EditAboutForm } from './EditAboutForm';
 import { useGetPracticeQuery } from '../../../../../../redux/api-services/practiceApi';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 export const BasicOverView = () => {
     const { id } = useParams();
     const { data, isLoading, error } = useGetPracticeQuery(id);
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const toggleDialog = () => setModalOpen(!isModalOpen);
 
     if (isLoading)
         return (
@@ -99,7 +103,7 @@ export const BasicOverView = () => {
                                     </Flex>
                                 </Flex>
 
-                                <Dialog.Root>
+                                <Dialog.Root open={isModalOpen} >
                                     <AlertDialog.Root>
                                         <DropdownMenu.Root>
                                             <DropdownMenu.Trigger>
@@ -117,6 +121,7 @@ export const BasicOverView = () => {
                                                 <Dialog.Trigger>
                                                     <DropdownMenu.Item>
                                                         <Flex
+                                                            onClick={toggleDialog}
                                                             width={'120px'}
                                                             align={'center'}
                                                             justify={'between'}>
@@ -137,7 +142,7 @@ export const BasicOverView = () => {
                                             </DropdownMenu.Content>
                                         </DropdownMenu.Root>
                                         <Dialog.Content maxWidth={'60vw'} size='4'>
-                                            <EditAboutForm />
+                                            <EditAboutForm toggleDialog={toggleDialog} />
                                         </Dialog.Content>
                                         <AlertDialog.Content maxWidth='450px'>
                                             <AlertDialog.Title>

@@ -54,8 +54,8 @@ export const practiiceApi = createApi({
             query: ({ practiceId, practiceData }) => ({
                 url: `${ENDPOINTS.managePractice}${practiceId}/`,
                 method: 'PUT',
-                body: practiceData
-            })
+                body: practiceData,
+            }),
         }),
 
         getSteps: builder.query({
